@@ -19,51 +19,51 @@ public class Precio {
 
     private Timestamp fechaHoraRegistro;
 
-    public int getId() {
+    public int obtenerId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void asignarId(int id) {
 		this.id = id;
 	}
 
-	public Producto getProducto() {
+	public Producto obtenerProducto() {
 		return producto;
 	}
 
-	public void setProducto(Producto producto) {
+	public void asignarProducto(Producto producto) {
 		this.producto = producto;
 	}
 
-	public Usuario getUsuario() {
+	public Usuario obtenerUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void asignarUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
-	public Tienda getTienda() {
+	public Tienda obtenerTienda() {
 		return tienda;
 	}
 
-	public void setTienda(Tienda tienda) {
+	public void asignarTienda(Tienda tienda) {
 		this.tienda = tienda;
 	}
 
-	public float getValor() {
+	public float obtenerValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void asignarValor(float valor) {
 		this.valor = valor;
 	}
 
-	public Timestamp getFechaHoraRegistro() {
+	public Timestamp obtenerFechaHoraRegistro() {
 		return fechaHoraRegistro;
 	}
 
-	public void setFechaHoraRegistro(Timestamp fechaHoraRegistro) {
+	public void asignarFechaHoraRegistro(Timestamp fechaHoraRegistro) {
 		this.fechaHoraRegistro = fechaHoraRegistro;
 	}
 

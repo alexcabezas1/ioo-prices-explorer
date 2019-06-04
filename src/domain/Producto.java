@@ -1,5 +1,9 @@
 package domain;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Producto {
 
     private int id;
@@ -7,7 +11,7 @@ public class Producto {
     private String nombre;
     private String marca;
     private String tipo;
-    private Precio precios;
+    private List<Precio> precios = new ArrayList<Precio>();
     
     public int obtenerId() {
         return this.id; 
@@ -45,7 +49,7 @@ public class Producto {
         this.tipo = valor;
     }
     
-    public Precio obtenerPrecios() {
+    public List<Precio> obtenerPrecios() {
         return this.precios;
     }
 
@@ -58,7 +62,15 @@ public class Producto {
     }
 
     public void agregarPrecio(Usuario usr, Tienda tda, float valor) {
-        
+    	Precio precio = new Precio();
+    	precio.asignarFechaHoraRegistro(new Timestamp(System.currentTimeMillis()));
+    	precio.asignarProducto(this);
+    	precio.asignarTienda(tda);
+    	precio.asignarUsuario(usr);
+    	usr.asignarPreciosRegistrados(precio);
+    	precio.asignarValor(valor);
+        this.precios.add(precio);
+    	
     }
 
     public void contiene(String valor) {

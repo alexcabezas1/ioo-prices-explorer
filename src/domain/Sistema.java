@@ -1,34 +1,51 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Sistema {
 
-    private Tienda tiendas;
+//    private Tienda tiendas;
+//    
+//    private Marca marcas;
+//
+//    private Direccion direcciones;
     
-    private Marca marcas;
-
-    private Direccion direcciones;
+    private List<Producto> productos = new ArrayList<Producto>();
+    private Map<String, Producto> productosPorNombre = new HashMap<String, Producto>();
+    private Map<String, Producto> productosPorCodigoBarra = new HashMap<String, Producto>();
     
-    private Producto productos;
+//    private Precio precios;
     
-    private Precio precios;
+//    private Producto productosComprados;
     
-    private Producto productosComprados;
+//    private Usuario usuarioLogeado;
     
-    private Usuario usuarioLogeado;
+//    private String tipos;
     
-    private String tipos;
+    
 
     public void altaPrecio(Usuario usr, Producto prd, Tienda tda, float valor) {
-    	
-
-        
+    	if(prd.obtenerNombre() != null && usr != null && tda != null) {
+    		Producto producto = buscarProductoPorCodigoBarras(prd.obtenerCodigoBarras());
+    		if(producto != null) {
+    			producto.agregarPrecio(usr, tda, valor);
+    		} else {
+    			prd.agregarPrecio(usr, tda, valor);
+    			crearProducto(prd);
+    		}
+    	}
     }
 
     public void crearTienda(String nombre, String direccion, long[] ubicacion) {
         
     }
 
-    public void crearProducto(String codigoBarras, String nombre, String marca, String tipo) {
+    public void crearProducto(Producto prd) {
+			productosPorCodigoBarra.put(prd.obtenerCodigoBarras(), prd);
+			productosPorNombre.put(prd.obtenerNombre(), prd);
         
     }
 
@@ -55,65 +72,38 @@ public class Sistema {
         
     }
 
-    /**
-     * @param String valor
-     */
-    public void buscarProductosPorPalabra(String valor) {
-        
+    public Producto buscarProductosPorPalabra(String valor) {
+    	return productosPorNombre.get(valor);
     }
 
-    /**
-     * @param String valor
-     */
-    public void buscarProductoPorCodigoBarras(String valor) {
-        
+    public Producto buscarProductoPorCodigoBarras(String valor) {
+    	return productosPorCodigoBarra.get(valor);
     }
 
-    /**
-     * @param int[] ids
-     */
     public void buscarProductos(int[] ids) {
         
     }
 
-    /**
-     * @param Producto[] ids
-     */
     public void mostrarResultadosBusquedaProductos(Producto[] ids) {
         
     }
 
-    /**
-     * @param Producto prd
-     */
     public void mostrarProducto(Producto prd) {
         
     }
 
-    /**
-     * @param Producto prd
-     */
     public void mostrarProductosSimilares(Producto prd) {
         
     }
 
-    /**
-     * @param Productos[] prds
-     */
     public void mostrarProductosRegistrados(Producto[] prds) {
         
     }
 
-    /**
-     * @param Usuario usr
-     */
     public void obtenerProductosComprados(Usuario usr) {
         
     }
 
-    /**
-     * @param Productos[] prds
-     */
     public void mostrarProductosComprados(Producto[] prds) {
         
     }

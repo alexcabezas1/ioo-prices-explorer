@@ -24,34 +24,79 @@ public class Usuario {
     private Producto productosComprados;
 
 
-    public void obtenerNombreUsuario() {
-    }
+    public String obtenerNombreUsuario() {
+		return nombreUsuario;
+	}
 
-    public void asignarNombreUsuario(String valor) {
-    }
+	public void asignarNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
 
-    public void obtenerEmail() {
-    }
+	public String obtenerEmail() {
+		return email;
+	}
 
-    public void asignarEmail(String valor) {
-    }
+	public void asignarEmail(String email) {
+		this.email = email;
+	}
 
-    public void asignarClave(String valor) {
-    }
+	public String obtenerClave() {
+		return clave;
+	}
 
-    public void obtenerFechaHoraRegistro() {
-    }
+	public void asignarClave(String clave) {
+		this.clave = clave;
+	}
 
-    public void obtenerFechaHoraActualizacion() {
-    }
+	public Timestamp obtenerFechaHoraRegistro() {
+		return fechaHoraRegistro;
+	}
 
-    public void obtenerPersona() {
-    }
+	public void asignarFechaHoraRegistro(Timestamp fechaHoraRegistro) {
+		this.fechaHoraRegistro = fechaHoraRegistro;
+	}
 
-    public void obtenerUbicacion() {
-    }
+	public Timestamp obtenerFechaHoraActualizacion() {
+		return fechaHoraActualizacion;
+	}
 
-    public void validar() {
+	public void asignarFechaHoraActualizacion(Timestamp fechaHoraActualizacion) {
+		this.fechaHoraActualizacion = fechaHoraActualizacion;
+	}
+
+	public Persona obtenerPersona() {
+		return persona;
+	}
+
+	public void asignarPersona(Persona persona) {
+		this.persona = persona;
+	}
+
+	public long[] obtenerUbicacion() {
+		return ubicacion;
+	}
+
+	public void asignarUbicacion(long[] ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public Precio obtenerPreciosRegistrados() {
+		return preciosRegistrados;
+	}
+
+	public void asignarPreciosRegistrados(Precio preciosRegistrados) {
+		this.preciosRegistrados = preciosRegistrados;
+	}
+
+	public Producto obtenerProductosComprados() {
+		return productosComprados;
+	}
+
+	public void asignarProductosComprados(Producto productosComprados) {
+		this.productosComprados = productosComprados;
+	}
+
+	public void validar() {
     }
 
     public void autenticar(String usuario, String clave) {
@@ -60,13 +105,5 @@ public class Usuario {
     public void comprarProducto(Producto prd, float precioCompra) {
     }
 
-    public void obtenerPreciosRegistrados() {
-    }
-
-    public void productosComprados() {
-    }
-
-    public void productosComprados(String fechaHora) {
-    }
 
 }
