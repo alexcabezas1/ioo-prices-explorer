@@ -5,13 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Producto {
-
+	
+	private static int idCounter = 0;
+	
     private int id;
     private String codigoBarras;
     private String nombre;
-    private String marca;
+    private Marca marca;
     private String tipo;
     private List<Precio> precios = new ArrayList<Precio>();
+    
+    public Producto(String codbar, String nombre, Marca mrc, String tpo) {
+    	this.codigoBarras = codbar;
+    	this.nombre = nombre;
+    	this.marca = mrc;
+    	this.tipo = tpo;
+    	this.id = idCounter++;
+    }
     
     public int obtenerId() {
         return this.id; 
@@ -33,11 +43,11 @@ public class Producto {
     	this.nombre = valor;
     }
 
-    public String obtenerMarca() {
+    public Marca obtenerMarca() {
         return this.marca;
     }
 
-    public void asignarMarca(String valor) {
+    public void asignarMarca(Marca valor) {
         this.marca = valor;
     }
 
@@ -61,20 +71,18 @@ public class Producto {
         
     }
 
-    public void agregarPrecio(Usuario usr, Tienda tda, float valor) {
-    	Precio precio = new Precio();
-    	precio.asignarFechaHoraRegistro(new Timestamp(System.currentTimeMillis()));
-    	precio.asignarProducto(this);
-    	precio.asignarTienda(tda);
-    	precio.asignarUsuario(usr);
-    	usr.asignarPreciosRegistrados(precio);
-    	precio.asignarValor(valor);
-        this.precios.add(precio);
-    	
+    public boolean contiene(String valor) {
+        String contenido = this.codigoBarras + " " + 
+        				   this.nombre + " " + 
+        				   this.marca.obtenerNombre() + " " + 
+        				   this.tipo;
+        return contenido.contains(valor);
     }
 
-    public void contiene(String valor) {
-        
+    public Precio agregarPrecio(Usuario usr, Tienda tda, float valor) {
+    	Precio prc = new Precio(this, usr, tda, valor);
+    	this.precios.add(prc);
+    	//usr.asignarPreciosRegistrados(precio);
+    	return prc;
     }
-
 }

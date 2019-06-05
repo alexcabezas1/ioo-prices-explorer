@@ -7,46 +7,44 @@ import java.util.Map;
 
 public class Sistema {
 
-//    private Tienda tiendas;
-//    
-//    private Marca marcas;
-//
-//    private Direccion direcciones;
+	private List<Tienda> tiendas = new ArrayList<Tienda>();
+ 
+	private List<Marca> marcas = new ArrayList<Marca>();
+
+	private List<Direccion> direcciones = new ArrayList<Direccion>();
     
     private List<Producto> productos = new ArrayList<Producto>();
     private Map<String, Producto> productosPorNombre = new HashMap<String, Producto>();
     private Map<String, Producto> productosPorCodigoBarra = new HashMap<String, Producto>();
     
-//    private Precio precios;
+    private List<Precio> precios = new ArrayList<Precio>();
     
-//    private Producto productosComprados;
+    private List<Producto> productosComprados = new ArrayList<Producto>();
     
-//    private Usuario usuarioLogeado;
+    private Usuario usuarioLogeado;
     
-//    private String tipos;
-    
-    
+    private List<String> tipos = new ArrayList<String>();
 
     public void altaPrecio(Usuario usr, Producto prd, Tienda tda, float valor) {
-    	if(prd.obtenerNombre() != null && usr != null && tda != null) {
-    		Producto producto = buscarProductoPorCodigoBarras(prd.obtenerCodigoBarras());
-    		if(producto != null) {
-    			producto.agregarPrecio(usr, tda, valor);
-    		} else {
-    			prd.agregarPrecio(usr, tda, valor);
-    			crearProducto(prd);
-    		}
-    	}
+		Precio prc = prd.agregarPrecio(usr, tda, valor);
+		this.precios.add(prc);
     }
 
     public void crearTienda(String nombre, String direccion, long[] ubicacion) {
         
     }
-
-    public void crearProducto(Producto prd) {
-			productosPorCodigoBarra.put(prd.obtenerCodigoBarras(), prd);
-			productosPorNombre.put(prd.obtenerNombre(), prd);
-        
+    
+    public Producto crearProducto(String codBarras, String nombre, String mrcNbre, String tipo) {
+    	Marca nMrc = new Marca(mrcNbre);
+    	return this.crearProducto(codBarras, nombre, nMrc, tipo);
+    }
+    
+    public Producto crearProducto(String codBarras, String nombre, Marca marca, String tipo) {
+    	Producto nPrd = new Producto(codBarras, nombre, marca, tipo.toLowerCase());
+    	this.actualizarTipos(tipo);
+		this.productosPorCodigoBarra.put(nPrd.obtenerCodigoBarras(), nPrd);
+		this.productosPorNombre.put(nPrd.obtenerNombre(), nPrd);
+		return nPrd;
     }
 
     public void crearPersona(String nombre, String apellido, String dni, String fechaNacimiento, String sexo) {
@@ -58,8 +56,8 @@ public class Sistema {
     }
 
     
-    public void obtenerUsuarioLogeado() {
-        
+    public Usuario obtenerUsuarioLogeado() {
+        return this.usuarioLogeado;
     }
 
     
@@ -72,8 +70,12 @@ public class Sistema {
         
     }
 
-    public Producto buscarProductosPorPalabra(String valor) {
-    	return productosPorNombre.get(valor);
+    public List<Producto> buscarProductosPorPalabra(String valor) {
+    	List<Producto> coincidencias = new ArrayList<Producto>();
+    	for (Producto prd : this.productos) {
+    		if (prd.contiene(valor)) coincidencias.add(prd);
+    	}
+    	return coincidencias;
     }
 
     public Producto buscarProductoPorCodigoBarras(String valor) {
@@ -141,12 +143,21 @@ public class Sistema {
         
     }
 
-    public void buscarTiendas(String valor) {
-        
+    public List<Tienda> buscarTiendas(String valor) {
+        List<Tienda> coincidencias = new ArrayList<Tienda>();
+        for (Tienda tda : this.tiendas) {
+        	if (tda.contiene(valor)) coincidencias.add(tda);
+        }
+        return coincidencias;
     }
 
-    public void buscarDireccion(String calle, String altura) {
-        
+    public List<Direccion> buscarDireccion(String calle, String altura) {
+        List<Direccion> coincidencias = new ArrayList<Direccion>();
+        String valor = calle + " " + altura;
+        for (Direccion dir : this.direcciones) {
+        	if (dir.contiene(valor)) coincidencias.add(dir);
+        }
+        return coincidencias;
     }
 
     
@@ -164,16 +175,55 @@ public class Sistema {
     }
 
     
-    public void guardarFormularioAltaPrecio() {
-        
+    public void guardarDatosAltaPrecio(Producto prd, Tienda tda, float prcValor) {
+        Usuario usr = this.obtenerUsuarioLogeado();
+        this.altaPrecio(usr, prd, tda, prcValor);
+    }
+    
+    public void guardarDatosAltaPrecio(Producto prd, float prcValor, String tdaNbre, 
+    		String dirCalle, int dirAtra, String dirEntCalle1, String dirEntCalle2) {
+    	
+    	Usuario usr = this.obtenerUsuarioLogeado();
+    	Direccion nDir = new Direccion(dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
+    	Tienda nTda = new Tienda(tdaNbre, nDir);
+    	this.guardarDatosAltaPrecio(prd, nTda, prcValor);
+    }
+    
+    public void guardarDatosAltaPrecio(String prdCodBar, String prdNbre, String mrcNbre, 
+    		String prdTpo, Tienda tda, float prcValor) {
+    	
+    	Producto nPrd = this.crearProducto(prdCodBar, prdNbre, mrcNbre, prdTpo);
+    	this.guardarDatosAltaPrecio(nPrd, tda, prcValor);
+    }
+    
+    public void guardarDatosAltaPrecio(String prdCodBar, String prdNbre, String mrcNbre, 
+    		String prdTpo, float prcValor, String tdaNbre, String dirCalle, 
+    		int dirAtra, String dirEntCalle1, String dirEntCalle2) {
+    	
+    	Usuario usr = this.obtenerUsuarioLogeado();
+    	Direccion nDir = new Direccion(dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
+    	Tienda nTda = new Tienda(tdaNbre, nDir);
+    	Producto nPrd = this.crearProducto(prdCodBar, prdNbre, mrcNbre, prdTpo);
+    	this.guardarDatosAltaPrecio(nPrd, nTda, prcValor);
     }
 
-    public void buscarMarcas(String valor) {
-        
+    public List<Marca> buscarMarcas(String valor) {
+        List<Marca> coincidencias = new ArrayList<Marca>();
+        for (Marca mrc : this.marcas) {
+        	if (mrc.contiene(valor)) coincidencias.add(mrc);
+        }
+        return coincidencias;
     }
 
     public void actualizarTipos(String valor) {
-        
+    	boolean encontrado = false;
+        for (String tipo : this.tipos) {
+        	if (tipo.toLowerCase() == valor.toLowerCase()) {
+        		encontrado = true;
+        		break;
+        	}
+        }
+        if (!encontrado) this.tipos.add(valor.toLowerCase());
     }
 
     public void elegirProducto(int id) {
