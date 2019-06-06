@@ -1,10 +1,17 @@
 package domain;
 
 public class Marca {
-
+	
+	private static int idCounter = 0;
+	
     private int id;
 
     private String nombre;
+    
+    public Marca(String nombre) {
+    	this.nombre = nombre.toLowerCase();
+    	this.id = ++idCounter;
+    }
     
     public int obtenerId() {
         return id;
@@ -18,10 +25,6 @@ public class Marca {
         this.nombre = nombre;
     }
 
-    public void asignarId(int id) {
-    	this.id = id;
-    }
-    
     public void validar() {
         
     }

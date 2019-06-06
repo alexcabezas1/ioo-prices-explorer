@@ -49,7 +49,7 @@ public class Vista extends JFrame{
 	private JButton btnAltaPrecio;
 	private JButton btnSalir;
 	
-	Usuario usr = new Usuario();
+	//Usuario usr = new Usuario();
 	
 	private Sistema sistema = new Sistema();
 	
@@ -66,8 +66,8 @@ public class Vista extends JFrame{
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				usr.asignarFechaHoraActualizacion(new Timestamp(System.currentTimeMillis()));
-				usr.asignarNombreUsuario(txtNombre.getText());
+				//usr.asignarFechaHoraActualizacion(new Timestamp(System.currentTimeMillis()));
+				//usr.asignarNombreUsuario(txtNombre.getText());
 				MenuVentana("Menú");
 			}
 		});
@@ -171,14 +171,14 @@ public class Vista extends JFrame{
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Producto prd = new Producto();
-				prd.asignarCodigoBarras(txtCodigoProducto.getText());
-				prd.asignarMarca(txtMarca.getText());
-				prd.asignarNombre(txtNombre.getText());
-				Tienda tda = new Tienda();
-				float valor = 0;
-				sistema.altaPrecio(usr, prd, tda, valor);
-				MenuVentana("Menú");
+//				Producto prd = new Producto();
+//				prd.asignarCodigoBarras(txtCodigoProducto.getText());
+//				prd.asignarMarca(txtMarca.getText());
+//				prd.asignarNombre(txtNombre.getText());
+//				Tienda tda = new Tienda();
+//				float valor = 0;
+//				sistema.altaPrecio(usr, prd, tda, valor);
+//				MenuVentana("Menú");
 			}
 		});
 		
@@ -248,16 +248,16 @@ public class Vista extends JFrame{
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Producto prd = sistema.buscarProductoPorCodigoBarras(txtCodigoProducto.getText());
-				if(prd != null) {
-					txtMarca.setText(prd.obtenerMarca());
-					txtNombre.setText(prd.obtenerNombre());
-				} else {
-					lblResultado.setVisible(true);
-					lblResultado.setText("No se encontraron resultados");
-					txtMarca.setText("");
-					txtNombre.setText("");
-				}
+//				Producto prd = sistema.buscarProductoPorCodigoBarras(txtCodigoProducto.getText());
+//				if(prd != null) {
+//					txtMarca.setText(prd.obtenerMarca());
+//					txtNombre.setText(prd.obtenerNombre());
+//				} else {
+//					lblResultado.setVisible(true);
+//					lblResultado.setText("No se encontraron resultados");
+//					txtMarca.setText("");
+//					txtNombre.setText("");
+//				}
 			}
 		});
 		
@@ -335,16 +335,16 @@ public class Vista extends JFrame{
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Producto prd = sistema.buscarProductosPorPalabra(txtNombre.getText());
-				if(prd != null) {
-					txtMarca.setText(prd.obtenerMarca());
-					txtCodigoProducto.setText(prd.obtenerCodigoBarras());
-				} else {
-					lblResultado.setVisible(true);
-					lblResultado.setText("No se encontraron resultados");
-					txtMarca.setText("");
-					txtCodigoProducto.setText("");
-				}
+//				Producto prd = sistema.buscarProductosPorPalabra(txtNombre.getText());
+//				if(prd != null) {
+//					txtMarca.setText(prd.obtenerMarca());
+//					txtCodigoProducto.setText(prd.obtenerCodigoBarras());
+//				} else {
+//					lblResultado.setVisible(true);
+//					lblResultado.setText("No se encontraron resultados");
+//					txtMarca.setText("");
+//					txtCodigoProducto.setText("");
+//				}
 			}
 		});
 		

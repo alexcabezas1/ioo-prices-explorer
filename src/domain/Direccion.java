@@ -1,7 +1,9 @@
 package domain;
 
 public class Direccion {
-
+	
+	private static int idCounter = 0;
+	
     private int id;
 
     private String calle;
@@ -12,63 +14,51 @@ public class Direccion {
 
     private String entreCalle2;
 
-    private long[] ubicacion;
+    private float[] ubicacion;
 
+    public Direccion(String calle, int altura, String entreCalle1, String entreCalle2, float[] ubic) {
+    	this.calle = calle.toLowerCase();
+    	this.altura = altura;
+    	this.entreCalle1 = entreCalle1.toLowerCase();
+    	this.entreCalle2 = entreCalle2.toLowerCase();
+    	this.ubicacion = ubic;
+    	this.id = ++idCounter;
+    }
     
     public int obtenerId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String obtenerCalle() {
 		return calle;
 	}
 
-	public void setCalle(String calle) {
-		this.calle = calle;
-	}
-
 	public int obtenerAltura() {
 		return altura;
-	}
-
-	public void setAltura(int altura) {
-		this.altura = altura;
 	}
 
 	public String obtenerEntreCalle1() {
 		return entreCalle1;
 	}
 
-	public void setEntreCalle1(String entreCalle1) {
-		this.entreCalle1 = entreCalle1;
-	}
-
 	public String obtenerEntreCalle2() {
 		return entreCalle2;
 	}
 
-	public void setEntreCalle2(String entreCalle2) {
-		this.entreCalle2 = entreCalle2;
-	}
-
-	public long[] obtenerUbicacion() {
+	public float[] obtenerUbicacion() {
 		return ubicacion;
-	}
-
-	public void setUbicacion(long[] ubicacion) {
-		this.ubicacion = ubicacion;
 	}
 
 	public void validar() {
         
     }
 
-    public void contiene(String valor) {
-        
+    public boolean contiene(String valor) {
+        String contenido = this.calle + " " + 
+        				   String.valueOf(this.altura) + " " + 
+        				   this.entreCalle1 + " " + 
+        				   this.entreCalle2;
+        return contenido.contains(valor);
     }
 
 }

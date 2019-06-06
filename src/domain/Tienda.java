@@ -1,50 +1,51 @@
 package domain;
 
 public class Tienda {
-
+	
+	private static int idCounter = 0;
+	
     private int id;
     
     private String nombre;
     
     private Direccion direccion;
     
-    public void obtenerId() {
-        
+    public Tienda(String nombre, Direccion dir) {
+    	this.nombre = nombre.toLowerCase();
+    	this.direccion = dir;
+    	this.id = ++idCounter;
     }
     
-    public void obtenerNombre() {
+    public String obtenerNombre() {
+		return nombre;
+	}
+
+	public void asignarNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Direccion obtenerDireccion() {
+		return direccion;
+	}
+
+	public void asignarDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
+
+	public float[] obtenerUbicacion() {
+		return this.direccion.obtenerUbicacion();
+	}
+	
+	public int obtenerId() {
+		return id;
+	}
+
+	public void validar() {
         
     }
 
-    public void asignarNombre(String valor) {
-        
-    }
-
-    
-    public void obtenerDireccion() {
-        
-    }
-
-    public void asignarDireccion(String valor) {
-        
-    }
-
-    
-    public void obtenerUbicacion() {
-        
-    }
-
-    public void asignarUbicacion(String valor) {
-        
-    }
-
-    
-    public void validar() {
-        
-    }
-
-    public void contiene(String valor) {
-        
+    public boolean contiene(String valor) {
+        return this.nombre.contains(valor);
     }
 
 }

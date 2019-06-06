@@ -3,10 +3,9 @@ package domain;
 import java.sql.Timestamp;
 
 public class Precio {
-
-    public Precio() {
-    }
-
+	
+	private static int idCounter = 0;
+	
     private int id;
 
     private Producto producto;
@@ -19,55 +18,46 @@ public class Precio {
 
     private Timestamp fechaHoraRegistro;
 
+    public Precio(Producto prd, Usuario usr, Tienda tda, float valor) {
+    	this.producto = prd;
+    	this.usuario = usr;
+    	this.tienda = tda;
+    	this.valor = valor;
+    	this.id = ++idCounter;
+    	this.fechaHoraRegistro = new Timestamp(System.currentTimeMillis());
+    }
+    
     public int obtenerId() {
 		return id;
-	}
-
-	public void asignarId(int id) {
-		this.id = id;
 	}
 
 	public Producto obtenerProducto() {
 		return producto;
 	}
 
-	public void asignarProducto(Producto producto) {
-		this.producto = producto;
-	}
-
 	public Usuario obtenerUsuario() {
 		return usuario;
-	}
-
-	public void asignarUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public Tienda obtenerTienda() {
 		return tienda;
 	}
 
-	public void asignarTienda(Tienda tienda) {
-		this.tienda = tienda;
-	}
-
 	public float obtenerValor() {
 		return valor;
-	}
-
-	public void asignarValor(float valor) {
-		this.valor = valor;
 	}
 
 	public Timestamp obtenerFechaHoraRegistro() {
 		return fechaHoraRegistro;
 	}
 
-	public void asignarFechaHoraRegistro(Timestamp fechaHoraRegistro) {
-		this.fechaHoraRegistro = fechaHoraRegistro;
-	}
-
 	public void validar() {
     }
-
+	
+	public String toString() {
+		String cont = "precio:" + String.valueOf(this.obtenerId());
+		cont += ", tienda:" + this.tienda.obtenerNombre();
+		cont += ", valor:" + String.valueOf(this.obtenerValor());
+		return cont;
+	} 
 }

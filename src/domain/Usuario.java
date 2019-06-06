@@ -17,27 +17,25 @@ public class Usuario {
 
     private Persona persona;
 
-    private long[] ubicacion;
+    private float[] ubicacion;
 
     private Precio preciosRegistrados;
 
     private Producto productosComprados;
 
+    public Usuario(String nbre, String email, String clave, Persona per) {
+    	this.nombreUsuario = nbre;
+    	this.email = email;
+    	this.clave = clave;
+    	this.persona = per;
+    }
 
     public String obtenerNombreUsuario() {
 		return nombreUsuario;
 	}
 
-	public void asignarNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
 	public String obtenerEmail() {
 		return email;
-	}
-
-	public void asignarEmail(String email) {
-		this.email = email;
 	}
 
 	public String obtenerClave() {
@@ -52,31 +50,19 @@ public class Usuario {
 		return fechaHoraRegistro;
 	}
 
-	public void asignarFechaHoraRegistro(Timestamp fechaHoraRegistro) {
-		this.fechaHoraRegistro = fechaHoraRegistro;
-	}
-
 	public Timestamp obtenerFechaHoraActualizacion() {
 		return fechaHoraActualizacion;
-	}
-
-	public void asignarFechaHoraActualizacion(Timestamp fechaHoraActualizacion) {
-		this.fechaHoraActualizacion = fechaHoraActualizacion;
 	}
 
 	public Persona obtenerPersona() {
 		return persona;
 	}
 
-	public void asignarPersona(Persona persona) {
-		this.persona = persona;
-	}
-
-	public long[] obtenerUbicacion() {
+	public float[] obtenerUbicacion() {
 		return ubicacion;
 	}
 
-	public void asignarUbicacion(long[] ubicacion) {
+	public void asignarUbicacion(float[] ubicacion) {
 		this.ubicacion = ubicacion;
 	}
 
