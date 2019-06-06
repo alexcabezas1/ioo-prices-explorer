@@ -1,6 +1,8 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +85,15 @@ public class Sistema {
     	return productosPorCodigoBarra.get(valor);
     }
 
-    public void buscarProductos(int[] ids) {
+    public List<Producto> buscarProductos(Integer[] ids) {
+    	List<Producto> coincidencias = new ArrayList<Producto>();
+    	for (Producto prd : this.productos) {
+    		List<Integer> ids_producto = Arrays.asList(ids);
+    		if (ids_producto.contains(prd.obtenerId())) {
+    			coincidencias.add(prd);
+    		}
+    	}
+    	return coincidencias;
         
     }
 
@@ -233,7 +243,14 @@ public class Sistema {
     }
 
     public void elegirProducto(int id) {
-        
+    	Usuario usr = obtenerUsuarioLogeado();
+
+    	Producto prd = buscarProductos(new Integer[]{id}).get(0);
+    	
+    	Precio prc = prd.obtenerPrecioMasReciente(usr.obtenerUbicacion());
+    	
+    	//Llamar a levantarVentanaDetallePrecio
+    	
     }
 
     public void mostrarPantallaDetalleProducto(Producto prd, Precio prc) {
@@ -290,5 +307,4 @@ public class Sistema {
     	si.mostrarPrecios();
     	
     }
-    
 }
