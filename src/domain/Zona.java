@@ -6,7 +6,13 @@ public class Zona {
 
     private List<float[]> ubicaciones;
 
-    public void pertenece(List<float[]> ubic) {
+    public Zona(List<float[]> ubicaciones) {
+    	this.ubicaciones = ubicaciones;
+    }
+    
+    public boolean pertenece(float[] ubic) {
+    	//TODO implementar metodo 
+    	return true;
     }
 
 }

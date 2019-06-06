@@ -249,7 +249,7 @@ public class Sistema {
     	
     	Precio prc = prd.obtenerPrecioMasReciente(usr.obtenerUbicacion());
     	
-    	//Llamar a levantarVentanaDetallePrecio
+    	//Llamar a iniciarVentanaDetallePrecio
     	
     }
 
@@ -257,16 +257,36 @@ public class Sistema {
         
     }
 
-    public void determinarZona(int metros) {
+    public Zona determinarZona(int metros) {
+    	float[] ubic = obtenerUsuarioLogeado().obtenerUbicacion();
+    	//TODO implementar algoritmo para cuadrar un radio de ubicaciones
+    	List<float[]> ubicaciones = new ArrayList<float[]>();
+		return new Zona(ubicaciones);
         
     }
 
-    public void obtenerPreciosMasRecientes(Producto prd, Zona zn) {
+    public List<Precio> obtenerPreciosMasRecientes(Producto prd, Zona zn) {
+    	
+        Map<Integer, Precio> preciosMasRecientesXTienda = new HashMap<Integer, Precio>();
         
+        for(Precio prc: prd.obtenerPrecios()){
+        	
+        	Precio precioMasReciente = preciosMasRecientesXTienda.get(prc.obtenerTienda().obtenerId());
+        	
+        	if ((precioMasReciente == null || prc.obtenerFechaHoraRegistro().after(precioMasReciente.obtenerFechaHoraRegistro()) &&
+        			zn.pertenece(prc.obtenerTienda().obtenerUbicacion()))){
+        		preciosMasRecientesXTienda.put(prc.obtenerTienda().obtenerId(), prc);
+        	}
+    	}
+        
+		return  Arrays.asList((Precio[]) preciosMasRecientesXTienda.values().toArray());
     }
 
     public void mostrarPantallaPreciosZona(Producto prd) {
-        
+    	Zona zn = determinarZona(500);
+    	obtenerPreciosMasRecientes(prd, zn);
+    	
+    	//Llamar a iniciarVentana, prepararListaPreciosZona(preciosMasRecientes)
     }
 
     public void prepararListaPreciosZona(Precio[] prcs) {
