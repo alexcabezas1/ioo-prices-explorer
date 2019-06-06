@@ -56,6 +56,7 @@ public class Precio {
 	
 	public String toString() {
 		String cont = "precio:" + String.valueOf(this.obtenerId());
+		cont += ", producto:" + this.producto.obtenerNombre();
 		cont += ", tienda:" + this.tienda.obtenerNombre();
 		cont += ", valor:" + String.valueOf(this.obtenerValor());
 		return cont;
