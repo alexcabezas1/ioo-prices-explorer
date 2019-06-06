@@ -14,15 +14,15 @@ public class Direccion {
 
     private String entreCalle2;
 
-    private long[] ubicacion;
+    private float[] ubicacion;
 
-    public Direccion(String calle, int altura, String entreCalle1, String entreCalle2, long[] ubic) {
-    	this.calle = calle;
+    public Direccion(String calle, int altura, String entreCalle1, String entreCalle2, float[] ubic) {
+    	this.calle = calle.toLowerCase();
     	this.altura = altura;
-    	this.entreCalle1 = entreCalle1;
-    	this.entreCalle2 = entreCalle2;
+    	this.entreCalle1 = entreCalle1.toLowerCase();
+    	this.entreCalle2 = entreCalle2.toLowerCase();
     	this.ubicacion = ubic;
-    	this.id = idCounter++;
+    	this.id = ++idCounter;
     }
     
     public int obtenerId() {
@@ -45,7 +45,7 @@ public class Direccion {
 		return entreCalle2;
 	}
 
-	public long[] obtenerUbicacion() {
+	public float[] obtenerUbicacion() {
 		return ubicacion;
 	}
 

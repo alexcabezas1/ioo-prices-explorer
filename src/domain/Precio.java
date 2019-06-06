@@ -23,7 +23,7 @@ public class Precio {
     	this.usuario = usr;
     	this.tienda = tda;
     	this.valor = valor;
-    	this.id = idCounter++;
+    	this.id = ++idCounter;
     	this.fechaHoraRegistro = new Timestamp(System.currentTimeMillis());
     }
     
@@ -53,5 +53,11 @@ public class Precio {
 
 	public void validar() {
     }
-
+	
+	public String toString() {
+		String cont = "precio:" + String.valueOf(this.obtenerId());
+		cont += ", tienda:" + this.tienda.obtenerNombre();
+		cont += ", valor:" + String.valueOf(this.obtenerValor());
+		return cont;
+	} 
 }

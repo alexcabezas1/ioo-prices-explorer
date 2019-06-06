@@ -49,7 +49,7 @@ public class Vista extends JFrame{
 	private JButton btnAltaPrecio;
 	private JButton btnSalir;
 	
-	Usuario usr = new Usuario();
+	//Usuario usr = new Usuario();
 	
 	private Sistema sistema = new Sistema();
 	
@@ -66,8 +66,8 @@ public class Vista extends JFrame{
 		btnAceptar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				usr.asignarFechaHoraActualizacion(new Timestamp(System.currentTimeMillis()));
-				usr.asignarNombreUsuario(txtNombre.getText());
+				//usr.asignarFechaHoraActualizacion(new Timestamp(System.currentTimeMillis()));
+				//usr.asignarNombreUsuario(txtNombre.getText());
 				MenuVentana("Menú");
 			}
 		});

@@ -11,9 +11,9 @@ public class Tienda {
     private Direccion direccion;
     
     public Tienda(String nombre, Direccion dir) {
-    	this.nombre = nombre;
+    	this.nombre = nombre.toLowerCase();
     	this.direccion = dir;
-    	this.id = idCounter++;
+    	this.id = ++idCounter;
     }
     
     public String obtenerNombre() {
@@ -32,7 +32,7 @@ public class Tienda {
 		this.direccion = direccion;
 	}
 
-	public long[] obtenerUbicacion() {
+	public float[] obtenerUbicacion() {
 		return this.direccion.obtenerUbicacion();
 	}
 	

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Zona {
 
-    private List<long[]> ubicaciones;
+    private List<float[]> ubicaciones;
 
-    public void pertenece(List<long[]> ubic) {
+    public void pertenece(List<float[]> ubic) {
     }
 
 }

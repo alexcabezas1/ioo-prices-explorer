@@ -16,11 +16,11 @@ public class Producto {
     private List<Precio> precios = new ArrayList<Precio>();
     
     public Producto(String codbar, String nombre, Marca mrc, String tpo) {
-    	this.codigoBarras = codbar;
-    	this.nombre = nombre;
+    	this.codigoBarras = codbar.toLowerCase();
+    	this.nombre = nombre.toLowerCase();
     	this.marca = mrc;
-    	this.tipo = tpo;
-    	this.id = idCounter++;
+    	this.tipo = tpo.toLowerCase();
+    	this.id = ++idCounter;
     }
     
     public int obtenerId() {
@@ -84,5 +84,14 @@ public class Producto {
     	this.precios.add(prc);
     	//usr.asignarPreciosRegistrados(precio);
     	return prc;
+    }
+    
+    public String toString() {
+    	String cont = "producto:" + String.valueOf(this.obtenerId());
+    	cont += ", nombre:" + this.obtenerNombre();
+    	cont += ", cod-barras:" + this.obtenerCodigoBarras();
+    	cont += ", marca:" + this.obtenerMarca().obtenerNombre();
+    	cont += ", tipo:" + this.obtenerTipo();
+    	return cont;
     }
 }

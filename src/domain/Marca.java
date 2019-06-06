@@ -9,8 +9,8 @@ public class Marca {
     private String nombre;
     
     public Marca(String nombre) {
-    	this.nombre = nombre;
-    	this.id = idCounter++;
+    	this.nombre = nombre.toLowerCase();
+    	this.id = ++idCounter;
     }
     
     public int obtenerId() {

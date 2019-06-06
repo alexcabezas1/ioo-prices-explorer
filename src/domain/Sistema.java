@@ -19,7 +19,7 @@ public class Sistema {
     
     private List<Precio> precios = new ArrayList<Precio>();
     
-    private List<Producto> productosComprados = new ArrayList<Producto>();
+    //private List<Producto> productosComprados = new ArrayList<Producto>();
     
     private Usuario usuarioLogeado;
     
@@ -41,6 +41,7 @@ public class Sistema {
     
     public Producto crearProducto(String codBarras, String nombre, Marca marca, String tipo) {
     	Producto nPrd = new Producto(codBarras, nombre, marca, tipo.toLowerCase());
+    	this.productos.add(nPrd);
     	this.actualizarTipos(tipo);
 		this.productosPorCodigoBarra.put(nPrd.obtenerCodigoBarras(), nPrd);
 		this.productosPorNombre.put(nPrd.obtenerNombre(), nPrd);
@@ -131,7 +132,12 @@ public class Sistema {
     }
 
     public void iniciarSesion(String nombreUsuario, String clave) {
-        
+    	//inicio de sesion fijo para probar
+    	Persona per = new Persona("Abelardo", "Ramirez", "123456789", "01-02-1994", "m");
+    	Usuario usr = new Usuario("abelardoram", "abelardo890@gmail.com", "1234*", per);
+    	float[] ubic = {(float)-34.6078662, (float)-58.3831004};
+    	usr.asignarUbicacion(ubic);
+        this.usuarioLogeado = usr;
     }
 
     
@@ -249,5 +255,40 @@ public class Sistema {
     public void prepararListaPreciosZona(Precio[] prcs) {
         
     }
-
+    
+    private void mostrarProductos() {
+    	for (Producto prd : this.productos) {
+        	System.out.println(prd.toString());
+    	}
+    }
+    
+    private void mostrarPrecios() {
+    	for (Precio prc : this.precios) {
+    		System.out.println(prc.toString());
+    	}
+    }
+    
+    public static void main(String[] args) {
+    	Sistema si = new Sistema();
+    	
+    	si.iniciarSesion("abelardoram", "1234*");
+    	//Usuario usr = si.obtenerUsuarioLogeado();
+    	
+    	si.guardarDatosAltaPrecio("codbar1", "Arroz Integral", "Gallo", 
+				    			"Arroz", (float)50.50, "coto", "Parana", 26, 
+				    			"Parana y Rivadavia", "");
+    	
+    	List<Marca> marcas = si.buscarMarcas("Gallo");
+    	Producto prd = new Producto("codbar2", "Arroz Blanco", marcas.get(0), "Arroz");
+    	
+    	List<Direccion> direcciones = si.buscarDireccion("Parana", "26");
+    	List<Tienda> tiendas = si.buscarTiendas("coto");
+    	
+    	si.guardarDatosAltaPrecio(prd, tiendas.get(0), (float)40.12);
+    	
+    	si.mostrarProductos();
+    	si.mostrarPrecios();
+    	
+    }
+    
 }
