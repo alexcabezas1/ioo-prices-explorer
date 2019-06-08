@@ -1,6 +1,8 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +87,15 @@ public class Sistema {
     	return productosPorCodigoBarra.get(valor);
     }
 
-    public void buscarProductos(int[] ids) {
+    public List<Producto> buscarProductos(Integer[] ids) {
+    	List<Producto> coincidencias = new ArrayList<Producto>();
+    	for (Producto prd : this.productos) {
+    		List<Integer> ids_producto = Arrays.asList(ids);
+    		if (ids_producto.contains(prd.obtenerId())) {
+    			coincidencias.add(prd);
+    		}
+    	}
+    	return coincidencias;
         
     }
 
@@ -239,23 +249,50 @@ public class Sistema {
     }
 
     public void elegirProducto(int id) {
-        
+    	Usuario usr = obtenerUsuarioLogeado();
+
+    	Producto prd = buscarProductos(new Integer[]{id}).get(0);
+    	
+    	Precio prc = prd.obtenerPrecioMasReciente(usr.obtenerUbicacion());
+    	
+    	//Llamar a iniciarVentanaDetallePrecio
+    	
     }
 
     public void mostrarPantallaDetalleProducto(Producto prd, Precio prc) {
         
     }
 
-    public void determinarZona(int metros) {
+    public Zona determinarZona(int metros) {
+    	float[] ubic = obtenerUsuarioLogeado().obtenerUbicacion();
+    	//TODO implementar algoritmo para cuadrar un radio de ubicaciones
+    	List<float[]> ubicaciones = new ArrayList<float[]>();
+		return new Zona(ubicaciones);
         
     }
 
-    public void obtenerPreciosMasRecientes(Producto prd, Zona zn) {
+    public List<Precio> obtenerPreciosMasRecientes(Producto prd, Zona zn) {
+    	
+        Map<Integer, Precio> preciosMasRecientesXTienda = new HashMap<Integer, Precio>();
         
+        for(Precio prc: prd.obtenerPrecios()){
+        	
+        	Precio precioMasReciente = preciosMasRecientesXTienda.get(prc.obtenerTienda().obtenerId());
+        	
+        	if ((precioMasReciente == null || prc.obtenerFechaHoraRegistro().after(precioMasReciente.obtenerFechaHoraRegistro()) &&
+        			zn.pertenece(prc.obtenerTienda().obtenerUbicacion()))){
+        		preciosMasRecientesXTienda.put(prc.obtenerTienda().obtenerId(), prc);
+        	}
+    	}
+        
+		return  Arrays.asList((Precio[]) preciosMasRecientesXTienda.values().toArray());
     }
 
     public void mostrarPantallaPreciosZona(Producto prd) {
-        
+    	Zona zn = determinarZona(500);
+    	obtenerPreciosMasRecientes(prd, zn);
+    	
+    	//Llamar a iniciarVentana, prepararListaPreciosZona(preciosMasRecientes)
     }
 
     public void prepararListaPreciosZona(Precio[] prcs) {
@@ -300,5 +337,4 @@ public class Sistema {
     	si.mostrarPrecios();
     	
     }
-    
 }

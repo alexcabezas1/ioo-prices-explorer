@@ -63,8 +63,17 @@ public class Producto {
         return this.precios;
     }
 
-    public void obtenerPrecioMasReciente(long[] ubicacion) {
+    public Precio obtenerPrecioMasReciente(float[] ubicacion) {
+    	Precio prcMasReciente = null;
     	
+    	for (Precio prc : precios) {
+    		if (prcMasReciente == null || ( prc.obtenerFechaHoraRegistro().after(prcMasReciente.obtenerFechaHoraRegistro())
+    				&& prc.obtenerTienda().obtenerUbicacion().equals(ubicacion))){
+    			prcMasReciente = prc;	
+    		}
+    	}
+    	
+    	return prcMasReciente;
     }
     
     public void validar() {
