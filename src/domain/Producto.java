@@ -91,7 +91,6 @@ public class Producto {
     public Precio agregarPrecio(Usuario usr, Tienda tda, float valor) {
     	Precio prc = new Precio(this, usr, tda, valor);
     	this.precios.add(prc);
-    	//usr.asignarPreciosRegistrados(precio);
     	return prc;
     }
     
