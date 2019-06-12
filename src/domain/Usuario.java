@@ -59,6 +59,12 @@ public class Usuario {
 	}
 
 	public float[] obtenerUbicacion() {
+		float latitud = (float) ((Math.random() * 180.0) - 90.0);
+		float longitud = (float) ((Math.random() * 180.0) - 90.0);
+		if(ubicacion == null) {
+			ubicacion = new float[] {latitud, longitud};
+		}
+		System.out.println("Ubicacion: " + ubicacion);
 		return ubicacion;
 	}
 
