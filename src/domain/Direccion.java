@@ -60,5 +60,13 @@ public class Direccion {
         				   this.entreCalle2;
         return contenido.contains(valor);
     }
-
+    
+    public String toString() {
+    	String cont = "direccion:" + String.valueOf(this.id);
+    	cont += ", calle: " + this.calle;
+    	cont += ", altura:" + String.valueOf(this.altura);
+    	cont += ", entre-calle1:" + this.entreCalle1;
+    	cont += ", entre-calle2:" + this.entreCalle2;
+    	return cont;
+    }
 }

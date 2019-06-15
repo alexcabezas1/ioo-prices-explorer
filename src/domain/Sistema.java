@@ -38,16 +38,18 @@ public class Sistema {
     
     public Producto crearProducto(String codBarras, String nombre, String mrcNbre, String tipo) {
     	Marca nMrc = new Marca(mrcNbre);
-    	return this.crearProducto(codBarras, nombre, nMrc, tipo);
-    }
-    
-    public Producto crearProducto(String codBarras, String nombre, Marca marca, String tipo) {
-    	Producto nPrd = new Producto(codBarras, nombre, marca, tipo.toLowerCase());
+    	this.marcas.add(nMrc);
+    	
+    	Producto nPrd = this.crearProducto(codBarras, nombre, nMrc, tipo);
     	this.productos.add(nPrd);
     	this.actualizarTipos(tipo);
 		this.productosPorCodigoBarra.put(nPrd.obtenerCodigoBarras(), nPrd);
 		this.productosPorNombre.put(nPrd.obtenerNombre(), nPrd);
-		return nPrd;
+    	return nPrd;
+    }
+    
+    public Producto crearProducto(String codBarras, String nombre, Marca marca, String tipo) {
+    	return new Producto(codBarras, nombre, marca, tipo.toLowerCase());
     }
 
     public void crearPersona(String nombre, String apellido, String dni, String fechaNacimiento, String sexo) {
@@ -76,7 +78,7 @@ public class Sistema {
     public List<Producto> buscarProductosPorPalabra(String valor) {
     	List<Producto> coincidencias = new ArrayList<Producto>();
     	for (Producto prd : this.productos) {
-    		if (prd.contiene(valor)) coincidencias.add(prd);
+    		if (prd.contiene(valor.toLowerCase())) coincidencias.add(prd);
     	}
     	return coincidencias;
     }
@@ -162,14 +164,14 @@ public class Sistema {
     public List<Tienda> buscarTiendas(String valor) {
         List<Tienda> coincidencias = new ArrayList<Tienda>();
         for (Tienda tda : this.tiendas) {
-        	if (tda.contiene(valor)) coincidencias.add(tda);
+        	if (tda.contiene(valor.toLowerCase())) coincidencias.add(tda);
         }
         return coincidencias;
     }
 
     public List<Direccion> buscarDireccion(String calle, String altura) {
         List<Direccion> coincidencias = new ArrayList<Direccion>();
-        String valor = calle + " " + altura;
+        String valor = (calle + " " + altura).toLowerCase();
         for (Direccion dir : this.direcciones) {
         	if (dir.contiene(valor)) coincidencias.add(dir);
         }
@@ -203,6 +205,8 @@ public class Sistema {
     	Direccion nDir = new Direccion(dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
     	Tienda nTda = new Tienda(tdaNbre, nDir);
     	this.guardarDatosAltaPrecio(prd, nTda, prcValor);
+    	this.tiendas.add(nTda);
+    	this.direcciones.add(nDir);
     }
     
     public void guardarDatosAltaPrecio(String prdCodBar, String prdNbre, String mrcNbre, 
@@ -221,12 +225,14 @@ public class Sistema {
     	Tienda nTda = new Tienda(tdaNbre, nDir);
     	Producto nPrd = this.crearProducto(prdCodBar, prdNbre, mrcNbre, prdTpo);
     	this.guardarDatosAltaPrecio(nPrd, nTda, prcValor);
+    	this.tiendas.add(nTda);
+    	this.direcciones.add(nDir);
     }
 
     public List<Marca> buscarMarcas(String valor) {
         List<Marca> coincidencias = new ArrayList<Marca>();
         for (Marca mrc : this.marcas) {
-        	if (mrc.contiene(valor)) coincidencias.add(mrc);
+        	if (mrc.contiene(valor.toLowerCase())) coincidencias.add(mrc);
         }
         return coincidencias;
     }
@@ -323,15 +329,19 @@ public class Sistema {
     	
     	si.guardarDatosAltaPrecio("codbar1", "Arroz Integral", "Gallo", 
 				    			"Arroz", (float)50.50, "coto", "Parana", 26, 
-				    			"Parana y Rivadavia", "");
+				    			"Parana", "Rivadavia");
     	
     	List<Marca> marcas = si.buscarMarcas("Gallo");
-    	Producto prd = new Producto("codbar2", "Arroz Blanco", marcas.get(0), "Arroz");
-    	
-    	List<Direccion> direcciones = si.buscarDireccion("Parana", "26");
+    	Producto prd1 = new Producto("codbar2", "Arroz Blanco", marcas.get(0), "Arroz");
     	List<Tienda> tiendas = si.buscarTiendas("coto");
     	
-    	si.guardarDatosAltaPrecio(prd, tiendas.get(0), (float)40.12);
+    	si.guardarDatosAltaPrecio(prd1, tiendas.get(0), (float)40.12);
+    	
+    	List<Direccion> direcciones = si.buscarDireccion("Parana", "26");
+    	System.out.println(direcciones.get(0));
+
+    	Producto prd2 = new Producto("codbar3", "Pasta Larga", new Marca("Alicorp"), "Pasta");
+    	si.guardarDatosAltaPrecio(prd2, (float)30.70, "Carrefur", "Beruti", 2890, "Beruti", "Austria");
     	
     	si.mostrarProductos();
     	si.mostrarPrecios();
