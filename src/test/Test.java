@@ -1,6 +1,6 @@
 package test;
 
-import view.Vista;
+import vista.Vista;
 
 public class Test {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package view;
+package vista;
 
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -13,11 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import domain.Persona;
-import domain.Producto;
-import domain.Sistema;
-import domain.Tienda;
-import domain.Usuario;
+import dominio.Persona;
+import dominio.Producto;
+import dominio.Sistema;
+import dominio.Tienda;
+import dominio.Usuario;
 
 public class Vista extends JFrame{
 
