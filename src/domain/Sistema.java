@@ -265,10 +265,20 @@ public class Sistema {
 
     public Zona determinarZona(int metros) {
     	float[] ubic = obtenerUsuarioLogeado().obtenerUbicacion();
-    	//TODO implementar algoritmo para cuadrar un radio de ubicaciones
+    	
+    	//Asumimos que ubic de 0 es la latitud
+    	//Asumimos que ubic de 1 es la longitud
+    	
+    	//Para sacar la zona, primero disminuimos la longitud y la latitud en metros/2
+    	float m = metros;
+    	
     	List<float[]> ubicaciones = new ArrayList<float[]>();
+    	ubicaciones.add(new float[] {ubic[0] - m, ubic[1]});
+    	ubicaciones.add(new float[] {ubic[0] + m, ubic[1]});
+    	ubicaciones.add(new float[] {ubic[0], ubic[1] - m});
+    	ubicaciones.add(new float[] {ubic[0], ubic[1] + m});
+    	
 		return new Zona(ubicaciones);
-        
     }
 
     public List<Precio> obtenerPreciosMasRecientes(Producto prd, Zona zn) {
