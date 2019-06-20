@@ -1,14 +1,13 @@
 package controlador;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import dominio.Precio;
 import dominio.Producto;
 import dominio.Usuario;
 import modelo.Modelo;
 
-public class ControladorPrincipal implements ActionListener {
+public class ControladorPrincipal extends Controlador {
 	private Modelo modelo;
 	
 	@Override

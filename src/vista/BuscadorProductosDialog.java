@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,18 +13,26 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultListModel;
+import dominio.Producto;
 
-public class BuscadorProductos extends JDialog {
+public class BuscadorProductosDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfNombre;
+	private JButton btnBuscar;
+	private DefaultListModel<Producto> resultadosBusquedaModel;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			BuscadorProductos dialog = new BuscadorProductos();
+			BuscadorProductosDialog dialog = new BuscadorProductosDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -34,7 +43,7 @@ public class BuscadorProductos extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BuscadorProductos() {
+	public BuscadorProductosDialog() {
 		setTitle("Buscar un Producto");
 		setBounds(100, 100, 307, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -42,7 +51,7 @@ public class BuscadorProductos extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		tfNombre = new JTextField();
+		JTextField tfNombre = new JTextField();
 		tfNombre.setBounds(10, 7, 183, 19);
 		contentPanel.add(tfNombre);
 		tfNombre.setColumns(10);
@@ -55,7 +64,8 @@ public class BuscadorProductos extends JDialog {
 		scrollPane.setBounds(10, 30, 278, 202);
 		contentPanel.add(scrollPane);
 		
-		JList listResultadosBusqueda = new JList();
+		resultadosBusquedaModel = new DefaultListModel<Producto>();
+		JList listResultadosBusqueda = new JList<Producto>(resultadosBusquedaModel);
 		scrollPane.setViewportView(listResultadosBusqueda);
 		
 		JPanel buttonPane = new JPanel();
@@ -69,7 +79,18 @@ public class BuscadorProductos extends JDialog {
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setActionCommand("Cancel");
-		buttonPane.add(cancelButton);
-		
+		buttonPane.add(cancelButton);	
+	}
+
+	public JTextField getTfNombre() {
+		return tfNombre;
+	}
+
+	public JButton getBtnBuscar() {
+		return btnBuscar;
+	}
+
+	public void addResultadoBusqueda(ArrayList<Producto> resultados) {
+		resultadosBusquedaModel.addAll(resultados);
 	}
 }

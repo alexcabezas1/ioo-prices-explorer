@@ -12,17 +12,24 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class AltaPrecio extends JPanel {
+public class AltaPrecioPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField tfNombreProducto;
 	private JTextField tfAltura;
 	private JTextField tfEntreCalles1;
 	private JTextField tfEntreCalles2;
 	private JTextField tfPrecioProducto;
+	private JButton btnBuscarProducto;
+	private JButton btnBuscarTienda;
+	private JButton btnRegistrarPrecio;
 
 	/**
 	 * Create the panel.
 	 */
-	public AltaPrecio() {
+	public AltaPrecioPanel() {
 		setLayout(null);
 		
 		JLabel lblDatosDelProducto = new JLabel("Datos del Producto");
@@ -30,12 +37,8 @@ public class AltaPrecio extends JPanel {
 		lblDatosDelProducto.setForeground(Color.BLUE);
 		add(lblDatosDelProducto);
 		
-		JButton btnBuscarProducto = new JButton("...");
+		btnBuscarProducto = new JButton("...");
 		btnBuscarProducto.setBounds(173, 6, 44, 21);
-		btnBuscarProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		add(btnBuscarProducto);
 		
 		JLabel lblNombreProducto = new JLabel("Nombre");
@@ -76,9 +79,9 @@ public class AltaPrecio extends JPanel {
 		lblDatosTienda.setForeground(Color.BLUE);
 		add(lblDatosTienda);
 		
-		JButton btnTienda = new JButton("...");
-		btnTienda.setBounds(174, 108, 43, 21);
-		add(btnTienda);
+		btnBuscarTienda = new JButton("...");
+		btnBuscarTienda.setBounds(174, 108, 43, 21);
+		add(btnBuscarTienda);
 		
 		JLabel lblNombreTienda = new JLabel("Nombre");
 		lblNombreTienda.setBounds(10, 138, 61, 16);
@@ -149,7 +152,7 @@ public class AltaPrecio extends JPanel {
 		lblPrecioProducto.setForeground(Color.BLACK);
 		add(lblPrecioProducto);
 		
-		JButton btnRegistrarPrecio = new JButton("Registrar Precio");
+		btnRegistrarPrecio = new JButton("Registrar Precio");
 		btnRegistrarPrecio.setBounds(10, 282, 207, 40);
 		btnRegistrarPrecio.setBackground(Color.BLUE);
 		btnRegistrarPrecio.setForeground(Color.WHITE);
@@ -167,4 +170,18 @@ public class AltaPrecio extends JPanel {
 		add(lblAltura_1);
 
 	}
+
+	public JButton getBtnBuscarProducto() {
+		return btnBuscarProducto;
+	}
+
+	public JButton getBtnBuscarTienda() {
+		return btnBuscarTienda;
+	}
+
+	public JButton getBtnRegistrarPrecio() {
+		return btnRegistrarPrecio;
+	}
+	
+	
 }

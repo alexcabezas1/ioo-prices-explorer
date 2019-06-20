@@ -2,14 +2,20 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class TestVista extends JFrame {
+import controlador.Controlador;
+import controlador.ControladorPrincipal;
 
-	private JPanel contentPane;
+public class TestVista extends JFrame implements InterfazVista {
+
+	private AltaPrecioPanel altaPrecioPanel;
+	private BuscadorProductosDialog buscadorProductosDialog;
+	private BuscadorTiendaDialog buscadorTiendaDialog;
 
 	/**
 	 * Launch the application.
@@ -36,9 +42,26 @@ public class TestVista extends JFrame {
 		//contentPane = new JPanel();
 		
 		//contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane = new AltaPrecio();
+		
+		buscadorProductosDialog = new BuscadorProductosDialog();
+		altaPrecioPanel = new AltaPrecioPanel();
+		
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		setContentPane(altaPrecioPanel);
+	}
+
+	@Override
+	public void arranca() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setControlador(Controlador c) {
+		altaPrecioPanel.getBtnBuscarProducto().addActionListener(c);
+		altaPrecioPanel.getBtnBuscarTienda().addActionListener(c);
+		altaPrecioPanel.getBtnRegistrarPrecio().addActionListener(c);
+		
 	}
 
 }

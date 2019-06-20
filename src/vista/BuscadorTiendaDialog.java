@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class BuscadorTienda extends JDialog {
+public class BuscadorTiendaDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -20,7 +20,7 @@ public class BuscadorTienda extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			BuscadorTienda dialog = new BuscadorTienda();
+			BuscadorTiendaDialog dialog = new BuscadorTiendaDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -31,7 +31,7 @@ public class BuscadorTienda extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BuscadorTienda() {
+	public BuscadorTiendaDialog() {
 		setTitle("Buscar una tienda");
 		setBounds(100, 100, 307, 300);
 		getContentPane().setLayout(new BorderLayout());
