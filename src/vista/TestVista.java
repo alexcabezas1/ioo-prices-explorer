@@ -43,7 +43,7 @@ public class TestVista extends JFrame implements InterfazVista {
 		
 		//contentPane.setLayout(new BorderLayout(0, 0));
 		
-		buscadorProductosDialog = new BuscadorProductosDialog();
+		//buscadorProductosDialog = new BuscadorProductosDialog();
 		altaPrecioPanel = new AltaPrecioPanel();
 		
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

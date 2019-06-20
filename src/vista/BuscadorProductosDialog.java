@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -32,7 +33,7 @@ public class BuscadorProductosDialog extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			BuscadorProductosDialog dialog = new BuscadorProductosDialog();
+			BuscadorProductosDialog dialog = new BuscadorProductosDialog(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -43,12 +44,12 @@ public class BuscadorProductosDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public BuscadorProductosDialog() {
+	public BuscadorProductosDialog(JFrame parent) {
+		super(parent, "   ");
 		setTitle("Buscar un Producto");
 		setBounds(100, 100, 307, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
 		JTextField tfNombre = new JTextField();
@@ -65,23 +66,12 @@ public class BuscadorProductosDialog extends JDialog {
 		contentPanel.add(scrollPane);
 		
 		resultadosBusquedaModel = new DefaultListModel<Producto>();
-		JList listResultadosBusqueda = new JList<Producto>(resultadosBusquedaModel);
+		JList<Producto> listResultadosBusqueda = new JList<Producto>(resultadosBusquedaModel);
 		scrollPane.setViewportView(listResultadosBusqueda);
 		
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		
-		JButton okButton = new JButton("OK");
-		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
-		
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.setActionCommand("Cancel");
-		buttonPane.add(cancelButton);	
+		setContentPane(contentPanel);
 	}
-
+	
 	public JTextField getTfNombre() {
 		return tfNombre;
 	}
@@ -90,7 +80,7 @@ public class BuscadorProductosDialog extends JDialog {
 		return btnBuscar;
 	}
 
-	public void addResultadoBusqueda(ArrayList<Producto> resultados) {
+	public void addResultadosBusqueda(ArrayList<Producto> resultados) {
 		resultadosBusquedaModel.addAll(resultados);
 	}
 }

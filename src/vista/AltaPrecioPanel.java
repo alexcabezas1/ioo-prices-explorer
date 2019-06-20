@@ -4,12 +4,17 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.DefaultComboBoxModel;
 
 public class AltaPrecioPanel extends JPanel {
@@ -25,6 +30,7 @@ public class AltaPrecioPanel extends JPanel {
 	private JButton btnBuscarProducto;
 	private JButton btnBuscarTienda;
 	private JButton btnRegistrarPrecio;
+	private JFrame frame;
 
 	/**
 	 * Create the panel.
@@ -32,12 +38,23 @@ public class AltaPrecioPanel extends JPanel {
 	public AltaPrecioPanel() {
 		setLayout(null);
 		
+		frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		
 		JLabel lblDatosDelProducto = new JLabel("Datos del Producto");
 		lblDatosDelProducto.setBounds(10, 10, 136, 13);
 		lblDatosDelProducto.setForeground(Color.BLUE);
 		add(lblDatosDelProducto);
 		
 		btnBuscarProducto = new JButton("...");
+		btnBuscarProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscadorProductosDialog buscador = new BuscadorProductosDialog(frame);
+				buscador.setModal(true);
+				buscador.setPreferredSize(new Dimension(310,300));
+				buscador.pack();
+				buscador.setVisible(true);
+			}
+		});
 		btnBuscarProducto.setBounds(173, 6, 44, 21);
 		add(btnBuscarProducto);
 		
@@ -156,10 +173,6 @@ public class AltaPrecioPanel extends JPanel {
 		btnRegistrarPrecio.setBounds(10, 282, 207, 40);
 		btnRegistrarPrecio.setBackground(Color.BLUE);
 		btnRegistrarPrecio.setForeground(Color.WHITE);
-		btnRegistrarPrecio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		add(btnRegistrarPrecio);
 		
 		JLabel lblAltura_1 = new JLabel("Altura");
