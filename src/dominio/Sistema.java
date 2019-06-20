@@ -124,6 +124,20 @@ public class Sistema {
         
     }
     
+    public void mostrarPantallaBuscarProductos() {
+    	
+    }
+    
+    public List<Producto> buscarProductosPorPalabra(String palabra) {
+    	List<Producto> productos = new ArrayList<Producto>();
+    	for (Producto prod: this.productos) {
+        	if (prod.contiene(palabra)) {
+        		productos.add(prod);
+        	}
+        }
+    	return productos;
+    }
+    
     public static void main(String[] args) {
     	Sistema si = new Sistema();
     	
