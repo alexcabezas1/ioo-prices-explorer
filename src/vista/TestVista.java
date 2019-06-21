@@ -1,19 +1,14 @@
 package vista;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Collection;
+import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-
 import controlador.Controlador;
-import controlador.ControladorPrincipal;
+import dominio.Marca;
 import dominio.Producto;
 
 public class TestVista extends JFrame implements InterfazVista {
@@ -60,6 +55,7 @@ public class TestVista extends JFrame implements InterfazVista {
 
 	@Override
 	public void arranca() {
+		preparar();
 		pack();
 		setVisible(true);
 	}
@@ -76,16 +72,34 @@ public class TestVista extends JFrame implements InterfazVista {
 	}
 
 	@Override
-	public void agregarResultadosBuscadorProductos(List<Producto> items) {
+	public void agregarResultadosBuscadorProductos(Collection<Producto> items) {
 		altaPrecioPanel.agregarResultadosBuscadorProductos(items);	
 	}
 
+	@Override
+	public void agregarTipos(Collection<String> items) {
+		altaPrecioPanel.agregarItemsSelectorTipos(items);
+	}
+	
+	@Override
+	public void agregarMarcas(Collection<Marca> items) {
+		altaPrecioPanel.agregarItemsSelectorMarcas(items);
+	}
+	
 	@Override
 	public void limpiar(String evento) {
 		altaPrecioPanel.limpiar(evento);
 		
 	}
 
+	@Override
+	public void preparar() {
+		notificarControlador(InterfazVista.ALLENAR_DATOS_DESDE_ALTAPRECIO);
+	}
 
-
+	@Override
+	public void notificarControlador(String evento) {
+		Random gen = new Random();
+		controlador.actionPerformed(new ActionEvent(this, (Integer) gen.nextInt(), evento));
+	}
 }

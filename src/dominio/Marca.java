@@ -32,5 +32,21 @@ public class Marca {
     public boolean contiene(String  valor) {
         return this.nombre.contains(valor);
     }
-
+    
+    
+    public String toString() {
+    	return this.nombre;
+    }
+    
+    @Override
+    public int hashCode() {
+    	return this.nombre.hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object otraMrc) {
+    	Marca otra = (Marca) otraMrc;
+    	if (otra == null) return false;
+    	return otra.obtenerNombre().equals(this.obtenerNombre()); 
+    }
 }

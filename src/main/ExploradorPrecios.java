@@ -37,8 +37,8 @@ public class ExploradorPrecios {
 				
 				cargarDatosPrueba();
 				
+				vista.agregarTipos(modelo.obtenerTipos());
 				vista.arranca();
-		    
 		    }
 		});
 	}

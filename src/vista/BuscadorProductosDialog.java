@@ -2,7 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.List;
+import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,8 +22,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import dominio.Producto;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class BuscadorProductosDialog extends JDialog implements ListSelectionListener {
 
@@ -84,7 +83,7 @@ public class BuscadorProductosDialog extends JDialog implements ListSelectionLis
 		this.btnBuscar.addActionListener(c);
 	}
 	
-	public void agregarResultadosBusqueda(List<Producto> items) {
+	public void agregarResultadosBusqueda(Collection<Producto> items) {
 		resultadosBusquedaModel.addAll(items);
 	}
 	

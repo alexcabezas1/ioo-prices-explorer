@@ -5,6 +5,7 @@ import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.ItemSelectable;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -12,10 +13,13 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import controlador.Controlador;
+import dominio.Marca;
 import dominio.Producto;
 
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Collection;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -27,8 +31,8 @@ public class AltaPrecioPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField tfNombreProducto;
-	private JComboBox cbTipoProducto;
-	private JComboBox cbMarcaProducto;
+	private JComboBox<String> cbTipoProducto;
+	private JComboBox<Marca> cbMarcaProducto;
 	private JTextField tfAltura;
 	private JTextField tfEntreCalles1;
 	private JTextField tfEntreCalles2;
@@ -37,8 +41,12 @@ public class AltaPrecioPanel extends JPanel {
 	private JButton btnBuscarTienda;
 	private JButton btnRegistrarPrecio;
 	private JFrame frame;
+	private DefaultComboBoxModel<String> tiposComboModel;
+	private DefaultComboBoxModel<Marca> marcasComboModel;
 	private BuscadorProductosDialog buscadorProductos;
 	private Producto productoElegido;
+	private String tipoElegido;
+	private Marca marcaElegida;
 	
 	private Controlador controlador;
 
@@ -81,9 +89,17 @@ public class AltaPrecioPanel extends JPanel {
 		lblTipoProducto.setForeground(Color.BLACK);
 		add(lblTipoProducto);
 		
-		cbTipoProducto = new JComboBox();
+		cbTipoProducto = new JComboBox<String>();
 		cbTipoProducto.setBounds(81, 50, 199, 19);
-		cbTipoProducto.setModel(new DefaultComboBoxModel(new String[] {"option 1", "option 2", "option 3"}));
+		tiposComboModel = new DefaultComboBoxModel<String>();
+		cbTipoProducto.setModel(tiposComboModel);
+		cbTipoProducto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<String> cb = (JComboBox) e.getSource();
+				setTipoElegido(cb.getSelectedItem().toString());
+			}
+		});
 		add(cbTipoProducto);
 		
 		JLabel lblMarca = new JLabel("Marca");
@@ -92,8 +108,17 @@ public class AltaPrecioPanel extends JPanel {
 		lblMarca.setForeground(Color.BLACK);
 		add(lblMarca);
 		
-		cbMarcaProducto = new JComboBox();
+		cbMarcaProducto = new JComboBox<Marca>();
 		cbMarcaProducto.setBounds(81, 75, 199, 21);
+		marcasComboModel = new DefaultComboBoxModel<Marca>();
+		cbMarcaProducto.setModel(marcasComboModel);
+		cbMarcaProducto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<Marca> cb = (JComboBox) e.getSource();
+				setMarcaElegida((Marca) cb.getSelectedItem());
+			}
+		});
 		add(cbMarcaProducto);
 		
 		JLabel lblDatosTienda = new JLabel("Tienda");
@@ -165,7 +190,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblEntreCalles);
 		
 		tfPrecioProducto = new JTextField();
-		tfPrecioProducto.setBounds(113, 257, 167, 19);
+		tfPrecioProducto.setBounds(128, 257, 152, 19);
 		add(tfPrecioProducto);
 		tfPrecioProducto.setColumns(10);
 		
@@ -204,8 +229,16 @@ public class AltaPrecioPanel extends JPanel {
 		return buscadorProductos.getPalabraBusqueda();
 	}
 	
-	public void agregarResultadosBuscadorProductos(List<Producto> items) {
+	public void agregarResultadosBuscadorProductos(Collection<Producto> items) {
 		buscadorProductos.agregarResultadosBusqueda(items);
+	}
+	
+	public void agregarItemsSelectorTipos(Collection<String> items) {
+		tiposComboModel.addAll(items);
+	}
+	
+	public void agregarItemsSelectorMarcas(Collection<Marca> items) {
+		marcasComboModel.addAll(items);
 	}
 	
 	public JButton getBtnRegistrarPrecio() {
@@ -227,6 +260,15 @@ public class AltaPrecioPanel extends JPanel {
 	public void setProductoElegido(Producto producto) {
 		productoElegido = producto;
 		tfNombreProducto.setText(producto.obtenerNombre());
+		tiposComboModel.setSelectedItem(producto.obtenerTipo());
+		marcasComboModel.setSelectedItem(producto.obtenerMarca());
 	}
 	
+	public void setTipoElegido(String tipo) {
+		tipoElegido = tipo;
+	}
+	
+	public void setMarcaElegida(Marca marca) {
+		marcaElegida = marca;
+	}
 }

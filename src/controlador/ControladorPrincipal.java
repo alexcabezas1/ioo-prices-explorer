@@ -3,8 +3,6 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-import javax.swing.event.ListSelectionEvent;
-
 import dominio.Precio;
 import dominio.Producto;
 import dominio.Usuario;
@@ -23,6 +21,9 @@ public class ControladorPrincipal extends Controlador {
 			case InterfazVista.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO:
 				buscarProductosPorPalabra();
 				break;
+			case InterfazVista.ALLENAR_DATOS_DESDE_ALTAPRECIO:
+				prepararAltaPrecio();
+				break;
 		}
 	}
 	
@@ -31,6 +32,12 @@ public class ControladorPrincipal extends Controlador {
 		String nombreUsuario = ""; 
 		String clave = "";
 		modelo.asignarUsuarioLogeado(nombreUsuario, clave);
+	}
+	
+	public void prepararAltaPrecio() {
+		this.vista.agregarTipos(modelo.obtenerTipos());
+		this.vista.agregarMarcas(modelo.obtenerMarcas());
+		System.out.print(modelo.obtenerMarcas());
 	}
 	
 	public void buscarProductosPorPalabra() {

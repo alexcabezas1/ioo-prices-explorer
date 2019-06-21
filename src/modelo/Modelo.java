@@ -3,8 +3,10 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import dominio.Direccion;
 import dominio.Marca;
@@ -17,15 +19,23 @@ import dominio.Zona;
 
 public class Modelo {
 	protected List<Tienda> tiendas = new ArrayList<Tienda>();
-	protected List<Marca> marcas = new ArrayList<Marca>();
+	protected Set<Marca> marcas = new HashSet<Marca>();
 	protected List<Direccion> direcciones = new ArrayList<Direccion>();
 	protected List<Producto> productos = new ArrayList<Producto>();
 	protected List<Precio> precios = new ArrayList<Precio>();
 	protected Usuario usuarioLogeado;
-	protected List<String> tipos = new ArrayList<String>();
+	protected Set<String> tipos = new HashSet<String>();
     
     private Map<String, Producto> productosPorNombre = new HashMap<String, Producto>();
     private Map<String, Producto> productosPorCodigoBarra = new HashMap<String, Producto>();
+
+    public Set<String> obtenerTipos(){
+    	return this.tipos;
+    }
+    
+    public Set<Marca> obtenerMarcas(){
+    	return this.marcas;
+    }
     
     public Producto crearProducto(String codBarras, String nombre, Marca marca, String tipo) {
     	return new Producto(codBarras, nombre, marca, tipo.toLowerCase());
