@@ -11,7 +11,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import controlador.Controlador;
+import dominio.Producto;
+
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,6 +27,8 @@ public class AltaPrecioPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField tfNombreProducto;
+	private JComboBox cbTipoProducto;
+	private JComboBox cbMarcaProducto;
 	private JTextField tfAltura;
 	private JTextField tfEntreCalles1;
 	private JTextField tfEntreCalles2;
@@ -31,6 +37,10 @@ public class AltaPrecioPanel extends JPanel {
 	private JButton btnBuscarTienda;
 	private JButton btnRegistrarPrecio;
 	private JFrame frame;
+	private BuscadorProductosDialog buscadorProductos;
+	private Producto productoElegido;
+	
+	private Controlador controlador;
 
 	/**
 	 * Create the panel.
@@ -48,14 +58,10 @@ public class AltaPrecioPanel extends JPanel {
 		btnBuscarProducto = new JButton("...");
 		btnBuscarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscadorProductosDialog buscador = new BuscadorProductosDialog(frame);
-				buscador.setModal(true);
-				buscador.setPreferredSize(new Dimension(310,300));
-				buscador.pack();
-				buscador.setVisible(true);
+				showBuscadorProductos();
 			}
 		});
-		btnBuscarProducto.setBounds(173, 6, 44, 21);
+		btnBuscarProducto.setBounds(236, 6, 44, 21);
 		add(btnBuscarProducto);
 		
 		JLabel lblNombreProducto = new JLabel("Nombre");
@@ -65,7 +71,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblNombreProducto);
 		
 		tfNombreProducto = new JTextField();
-		tfNombreProducto.setBounds(121, 29, 96, 19);
+		tfNombreProducto.setBounds(81, 29, 199, 19);
 		add(tfNombreProducto);
 		tfNombreProducto.setColumns(10);
 		
@@ -75,8 +81,8 @@ public class AltaPrecioPanel extends JPanel {
 		lblTipoProducto.setForeground(Color.BLACK);
 		add(lblTipoProducto);
 		
-		JComboBox cbTipoProducto = new JComboBox();
-		cbTipoProducto.setBounds(81, 50, 136, 19);
+		cbTipoProducto = new JComboBox();
+		cbTipoProducto.setBounds(81, 50, 199, 19);
 		cbTipoProducto.setModel(new DefaultComboBoxModel(new String[] {"option 1", "option 2", "option 3"}));
 		add(cbTipoProducto);
 		
@@ -86,8 +92,8 @@ public class AltaPrecioPanel extends JPanel {
 		lblMarca.setForeground(Color.BLACK);
 		add(lblMarca);
 		
-		JComboBox cbMarcaProducto = new JComboBox();
-		cbMarcaProducto.setBounds(81, 75, 136, 21);
+		cbMarcaProducto = new JComboBox();
+		cbMarcaProducto.setBounds(81, 75, 199, 21);
 		add(cbMarcaProducto);
 		
 		JLabel lblDatosTienda = new JLabel("Tienda");
@@ -97,7 +103,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblDatosTienda);
 		
 		btnBuscarTienda = new JButton("...");
-		btnBuscarTienda.setBounds(174, 108, 43, 21);
+		btnBuscarTienda.setBounds(237, 112, 43, 21);
 		add(btnBuscarTienda);
 		
 		JLabel lblNombreTienda = new JLabel("Nombre");
@@ -107,7 +113,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblNombreTienda);
 		
 		JComboBox cbTienda = new JComboBox();
-		cbTienda.setBounds(81, 133, 136, 21);
+		cbTienda.setBounds(81, 133, 199, 21);
 		add(cbTienda);
 		
 		JLabel lblProvincia = new JLabel("Provincia");
@@ -118,11 +124,11 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblProvincia);
 		
 		JComboBox cbProvincia = new JComboBox();
-		cbProvincia.setBounds(81, 160, 136, 21);
+		cbProvincia.setBounds(81, 160, 199, 21);
 		add(cbProvincia);
 		
 		JComboBox cbCalle = new JComboBox();
-		cbCalle.setBounds(81, 187, 136, 21);
+		cbCalle.setBounds(81, 187, 199, 21);
 		add(cbCalle);
 		
 		JLabel lblCalle = new JLabel("Calle");
@@ -133,7 +139,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblCalle);
 		
 		tfAltura = new JTextField();
-		tfAltura.setBounds(81, 213, 136, 19);
+		tfAltura.setBounds(81, 213, 199, 19);
 		tfAltura.setColumns(10);
 		add(tfAltura);
 		
@@ -144,12 +150,12 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblAltura);
 		
 		tfEntreCalles1 = new JTextField();
-		tfEntreCalles1.setBounds(81, 234, 71, 19);
+		tfEntreCalles1.setBounds(81, 234, 98, 19);
 		tfEntreCalles1.setColumns(10);
 		add(tfEntreCalles1);
 		
 		tfEntreCalles2 = new JTextField();
-		tfEntreCalles2.setBounds(156, 234, 61, 19);
+		tfEntreCalles2.setBounds(189, 234, 91, 19);
 		tfEntreCalles2.setColumns(10);
 		add(tfEntreCalles2);
 		
@@ -159,7 +165,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblEntreCalles);
 		
 		tfPrecioProducto = new JTextField();
-		tfPrecioProducto.setBounds(140, 257, 77, 19);
+		tfPrecioProducto.setBounds(113, 257, 167, 19);
 		add(tfPrecioProducto);
 		tfPrecioProducto.setColumns(10);
 		
@@ -170,7 +176,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblPrecioProducto);
 		
 		btnRegistrarPrecio = new JButton("Registrar Precio");
-		btnRegistrarPrecio.setBounds(10, 282, 207, 40);
+		btnRegistrarPrecio.setBounds(10, 282, 270, 40);
 		btnRegistrarPrecio.setBackground(Color.BLUE);
 		btnRegistrarPrecio.setForeground(Color.WHITE);
 		add(btnRegistrarPrecio);
@@ -184,17 +190,43 @@ public class AltaPrecioPanel extends JPanel {
 
 	}
 
-	public JButton getBtnBuscarProducto() {
-		return btnBuscarProducto;
+	private void showBuscadorProductos() {
+		buscadorProductos = new BuscadorProductosDialog(frame, this);
+		buscadorProductos.addListenerBuscarProducto(this.controlador);
+		buscadorProductos.setPreferredSize(new Dimension(310,300));
+		buscadorProductos.pack();
+		System.out.print(controlador);
+		buscadorProductos.setModal(true);
+		buscadorProductos.setVisible(true);
 	}
-
-	public JButton getBtnBuscarTienda() {
-		return btnBuscarTienda;
+	
+	public String getPalabraBuscadorProductos() {
+		return buscadorProductos.getPalabraBusqueda();
 	}
-
+	
+	public void agregarResultadosBuscadorProductos(List<Producto> items) {
+		buscadorProductos.agregarResultadosBusqueda(items);
+	}
+	
 	public JButton getBtnRegistrarPrecio() {
 		return btnRegistrarPrecio;
 	}
 	
+	public void setControlador(Controlador c) {
+		this.controlador = c;
+	}
+	
+	public void limpiar(String evento) {
+		switch (evento) {
+			case InterfazVista.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO: 
+				buscadorProductos.limpiar();
+				break;
+		}
+	}
+	
+	public void setProductoElegido(Producto producto) {
+		productoElegido = producto;
+		tfNombreProducto.setText(producto.obtenerNombre());
+	}
 	
 }

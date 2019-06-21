@@ -7,6 +7,7 @@ import dominio.Marca;
 import dominio.Precio;
 import dominio.Producto;
 import dominio.Tienda;
+import modelo.Modelo;
 
 public class TestModelo {
 	static final Modelo modelo = new Modelo();

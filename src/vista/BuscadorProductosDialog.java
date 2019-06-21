@@ -1,23 +1,31 @@
 package vista;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.util.ArrayList;
+import java.awt.Component;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import controlador.Controlador;
+
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import dominio.Producto;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class BuscadorProductosDialog extends JDialog {
+public class BuscadorProductosDialog extends JDialog implements ListSelectionListener {
 
 	/**
 	 * 
@@ -26,38 +34,30 @@ public class BuscadorProductosDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfNombre;
 	private JButton btnBuscar;
+	private JList<Producto> listResultadosBusqueda;
 	private DefaultListModel<Producto> resultadosBusquedaModel;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			BuscadorProductosDialog dialog = new BuscadorProductosDialog(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private AltaPrecioPanel altaPrecioPanel;
 
 	/**
 	 * Create the dialog.
 	 */
-	public BuscadorProductosDialog(JFrame parent) {
-		super(parent, "   ");
+	public BuscadorProductosDialog(JFrame parent, AltaPrecioPanel altaPrecio) {
+		super(parent);
+		this.altaPrecioPanel = altaPrecio;
+		
 		setTitle("Buscar un Producto");
 		setBounds(100, 100, 307, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(null);
 		
-		JTextField tfNombre = new JTextField();
+		tfNombre = new JTextField();
 		tfNombre.setBounds(10, 7, 183, 19);
 		contentPanel.add(tfNombre);
 		tfNombre.setColumns(10);
 		
-		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setActionCommand(InterfazVista.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO);
 		btnBuscar.setBounds(203, 6, 85, 21);
 		contentPanel.add(btnBuscar);
 		
@@ -66,21 +66,63 @@ public class BuscadorProductosDialog extends JDialog {
 		contentPanel.add(scrollPane);
 		
 		resultadosBusquedaModel = new DefaultListModel<Producto>();
-		JList<Producto> listResultadosBusqueda = new JList<Producto>(resultadosBusquedaModel);
+		listResultadosBusqueda = new JList<Producto>(resultadosBusquedaModel);
+		listResultadosBusqueda.setCellRenderer(new BuscadorListCellRenderer());
+		listResultadosBusqueda.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel selectionModel = this.listResultadosBusqueda.getSelectionModel();
+		selectionModel.addListSelectionListener(this);
 		scrollPane.setViewportView(listResultadosBusqueda);
 		
 		setContentPane(contentPanel);
 	}
 	
-	public JTextField getTfNombre() {
-		return tfNombre;
+	public String getPalabraBusqueda() {
+		return tfNombre.getText();
 	}
 
-	public JButton getBtnBuscar() {
-		return btnBuscar;
+	public void addListenerBuscarProducto(Controlador c) {
+		this.btnBuscar.addActionListener(c);
+	}
+	
+	public void agregarResultadosBusqueda(List<Producto> items) {
+		resultadosBusquedaModel.addAll(items);
+	}
+	
+	public void limpiar() {
+		resultadosBusquedaModel.clear();
+	}
+	
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		altaPrecioPanel.setProductoElegido(listResultadosBusqueda.getSelectedValue());
+	}
+	
+	class BuscadorListCellRenderer extends JLabel implements ListCellRenderer<Producto> {
+		public BuscadorListCellRenderer() {
+			setOpaque(true);
+		}
+	
+		@Override
+		public Component getListCellRendererComponent(JList<? extends Producto> list, Producto value, int index,
+				boolean isSelected, boolean cellHasFocus) {
+			
+			String desc = "<html><b>" + value.obtenerNombre() + "</b>, " + 
+					value.obtenerMarca().obtenerNombre() + " (<i>" + 
+					value.obtenerTipo() + "</i>)</html>"; 
+			setText(desc);
+
+			if (isSelected){
+				setBackground(list.getSelectionBackground());
+				setForeground(list.getSelectionForeground());
+			}else{
+				setBackground(list.getBackground());
+				setForeground(list.getForeground());
+			}
+			setFont(list.getFont());
+		  	setEnabled(list.isEnabled());
+		  	
+			return this;
+		}
 	}
 
-	public void addResultadosBusqueda(ArrayList<Producto> resultados) {
-		resultadosBusquedaModel.addAll(resultados);
-	}
 }
