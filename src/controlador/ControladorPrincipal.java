@@ -27,6 +27,7 @@ public class ControladorPrincipal extends Controlador {
 				break;
 			case InterfazVista.ABUSCAR_TIENDAS_DESDE_ALTAPRECIO:
 				buscarTiendas();
+				break;
 		}
 	}
 	
