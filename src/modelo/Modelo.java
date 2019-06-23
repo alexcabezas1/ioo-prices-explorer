@@ -18,9 +18,9 @@ import dominio.Usuario;
 import dominio.Zona;
 
 public class Modelo {
-	protected List<Tienda> tiendas = new ArrayList<Tienda>();
+	protected Set<Tienda> tiendas = new HashSet<Tienda>();
 	protected Set<Marca> marcas = new HashSet<Marca>();
-	protected List<Direccion> direcciones = new ArrayList<Direccion>();
+	protected Set<Direccion> direcciones = new HashSet<Direccion>();
 	protected List<Producto> productos = new ArrayList<Producto>();
 	protected List<Precio> precios = new ArrayList<Precio>();
 	protected Usuario usuarioLogeado;
@@ -28,6 +28,8 @@ public class Modelo {
     
     private Map<String, Producto> productosPorNombre = new HashMap<String, Producto>();
     private Map<String, Producto> productosPorCodigoBarra = new HashMap<String, Producto>();
+    protected Set<String> tiendasNombres = new HashSet<String>();
+    protected Set<String> calles = new HashSet<String>();
 
     public Set<String> obtenerTipos(){
     	return this.tipos;
@@ -35,6 +37,18 @@ public class Modelo {
     
     public Set<Marca> obtenerMarcas(){
     	return this.marcas;
+    }
+    
+    public Set<Tienda> obtenerTiendas(){
+    	return this.tiendas;
+    }
+    
+    public Set<String> obtenerTiendasNombres(){
+    	return this.tiendasNombres;
+    }
+    
+    public Set<String> obtenerCalles(){
+    	return this.calles;
     }
     
     public Producto crearProducto(String codBarras, String nombre, Marca marca, String tipo) {
@@ -62,6 +76,17 @@ public class Modelo {
 		this.productosPorCodigoBarra.put(nPrd.obtenerCodigoBarras(), nPrd);
 		this.productosPorNombre.put(nPrd.obtenerNombre(), nPrd);
     	return nPrd;
+    }
+    
+    public Tienda crearTienda(String nombre, String calle, int altura, 
+    						  String entreCalle1, String entreCalle2, float[] ubicacion) {
+    	Direccion nDir = new Direccion(calle, altura, entreCalle1, entreCalle2, ubicacion);
+    	Tienda nTda = new Tienda(nombre, nDir);
+    	this.tiendas.add(nTda);
+    	this.direcciones.add(nDir);
+    	this.tiendasNombres.add(nTda.obtenerNombre());
+    	this.calles.add(nDir.obtenerCalle());
+    	return nTda;
     }
     
     public void altaPrecio(Usuario usr, Producto prd, Tienda tda, float valor) {
@@ -144,11 +169,8 @@ public class Modelo {
     		String dirCalle, int dirAtra, String dirEntCalle1, String dirEntCalle2) {
     	
     	Usuario usr = this.obtenerUsuarioLogeado();
-    	Direccion nDir = new Direccion(dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
-    	Tienda nTda = new Tienda(tdaNbre, nDir);
+    	Tienda nTda = this.crearTienda(tdaNbre, dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
     	this.guardarDatosAltaPrecio(prd, nTda, prcValor);
-    	this.tiendas.add(nTda);
-    	this.direcciones.add(nDir);
     }
     
     public void guardarDatosAltaPrecio(String prdCodBar, String prdNbre, String mrcNbre, 
@@ -163,12 +185,9 @@ public class Modelo {
     		int dirAtra, String dirEntCalle1, String dirEntCalle2) {
     	
     	Usuario usr = this.obtenerUsuarioLogeado();
-    	Direccion nDir = new Direccion(dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
-    	Tienda nTda = new Tienda(tdaNbre, nDir);
+    	Tienda nTda = this.crearTienda(tdaNbre, dirCalle, dirAtra, dirEntCalle1, dirEntCalle2, usr.obtenerUbicacion());
     	Producto nPrd = this.crearProducto(prdCodBar, prdNbre, mrcNbre, prdTpo);
     	this.guardarDatosAltaPrecio(nPrd, nTda, prcValor);
-    	this.tiendas.add(nTda);
-    	this.direcciones.add(nDir);
     }
     
     public Zona determinarZona(int metros) {

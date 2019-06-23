@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import controlador.Controlador;
 import dominio.Marca;
 import dominio.Producto;
+import dominio.Tienda;
 
 public class TestVista extends JFrame implements InterfazVista {
 
@@ -64,18 +65,28 @@ public class TestVista extends JFrame implements InterfazVista {
 	public void setControlador(Controlador c) {
 		controlador = c;
 		altaPrecioPanel.setControlador(c);
-		//altaPrecioPanel.getBtnRegistrarPrecio().addActionListener(c);
 	}
 	
+	@Override
 	public String getPalabraBusquedaProducto() {
 		return altaPrecioPanel.getPalabraBuscadorProductos();
 	}
-
+	
+	@Override
+	public String getPalabraBusquedaTiendas() {
+		return altaPrecioPanel.getPalabraBuscadorTiendas();
+	}
+	
 	@Override
 	public void agregarResultadosBuscadorProductos(Collection<Producto> items) {
 		altaPrecioPanel.agregarResultadosBuscadorProductos(items);	
 	}
 
+	@Override
+	public void agregarResultadosBuscadorTiendas(Collection<Tienda> items) {
+		altaPrecioPanel.agregarResultadosBuscadorTiendas(items);
+	}
+	
 	@Override
 	public void agregarTipos(Collection<String> items) {
 		altaPrecioPanel.agregarItemsSelectorTipos(items);
@@ -85,11 +96,20 @@ public class TestVista extends JFrame implements InterfazVista {
 	public void agregarMarcas(Collection<Marca> items) {
 		altaPrecioPanel.agregarItemsSelectorMarcas(items);
 	}
+
+	@Override
+	public void agregarTiendas(Collection<String> items) {
+		altaPrecioPanel.agregarItemsSelectorTiendas(items);
+	}
+
+	@Override
+	public void agregarCalles(Collection<String> items) {
+		altaPrecioPanel.agregarItemsSelectorCalles(items);
+	}
 	
 	@Override
 	public void limpiar(String evento) {
 		altaPrecioPanel.limpiar(evento);
-		
 	}
 
 	@Override

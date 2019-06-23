@@ -45,7 +45,32 @@ public class Tienda {
     }
 
     public boolean contiene(String valor) {
-        return this.nombre.contains(valor);
+    	String cont = this.nombre + " " +
+    				  this.direccion.obtenerCalle() + " " +
+    				  String.valueOf(this.direccion.obtenerAltura()) + " " +
+    				  this.direccion.obtenerEntreCalle1() + " " +
+    				  this.direccion.obtenerEntreCalle2();
+        return cont.contains(valor);
+    }
+    
+    protected String obtenerValores() {
+    	return this.nombre + this.direccion.obtenerValores();
+    }
+    
+    @Override
+    public int hashCode() {
+    	return obtenerValores().hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object otraTienda) {
+    	Tienda otra = (Tienda) otraTienda;
+    	if (otra == null) return false;
+    	return otra.obtenerValores().equals(this.obtenerValores()); 
+    }
+    
+    public String toString() {
+    	return this.nombre;
     }
 
 }

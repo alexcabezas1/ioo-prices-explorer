@@ -69,4 +69,25 @@ public class Direccion {
     	cont += ", entre-calle2:" + this.entreCalle2;
     	return cont;
     }
+    
+    protected String obtenerValores() {
+    	String cont = this.obtenerCalle() + 
+					  String.valueOf(this.obtenerAltura()) + 
+					  this.obtenerEntreCalle1() + 
+					  this.obtenerEntreCalle2();
+    	return cont;
+    }
+    
+    @Override
+    public int hashCode() {
+    	return obtenerValores().hashCode();
+    }
+    
+    @Override
+    public boolean equals(Object otraDireccion) {
+    	Direccion otra = (Direccion) otraDireccion;
+    	if (otra == null) return false;
+    	return otra.obtenerValores().equals(this.obtenerValores()); 
+    }
+
 }

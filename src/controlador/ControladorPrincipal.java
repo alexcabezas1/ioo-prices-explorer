@@ -5,6 +5,7 @@ import java.util.List;
 
 import dominio.Precio;
 import dominio.Producto;
+import dominio.Tienda;
 import dominio.Usuario;
 import modelo.Modelo;
 import vista.InterfazVista;
@@ -24,55 +25,61 @@ public class ControladorPrincipal extends Controlador {
 			case InterfazVista.ALLENAR_DATOS_DESDE_ALTAPRECIO:
 				prepararAltaPrecio();
 				break;
+			case InterfazVista.ABUSCAR_TIENDAS_DESDE_ALTAPRECIO:
+				buscarTiendas();
 		}
 	}
 	
-	public void iniciarSesion() {
+	private void iniciarSesion() {
 		// TODO obtener usuario y clave de la vista
 		String nombreUsuario = ""; 
 		String clave = "";
 		modelo.asignarUsuarioLogeado(nombreUsuario, clave);
 	}
 	
-	public void prepararAltaPrecio() {
+	private void prepararAltaPrecio() {
 		this.vista.agregarTipos(modelo.obtenerTipos());
 		this.vista.agregarMarcas(modelo.obtenerMarcas());
-		System.out.print(modelo.obtenerMarcas());
+		System.out.print(modelo.obtenerCalles());
+		this.vista.agregarTiendas(modelo.obtenerTiendasNombres());
+		this.vista.agregarCalles(modelo.obtenerCalles());
 	}
 	
-	public void buscarProductosPorPalabra() {
+	private void buscarProductosPorPalabra() {
 		this.vista.limpiar(InterfazVista.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO);
 		String busqueda = this.vista.getPalabraBusquedaProducto();
-		System.out.print(busqueda);
 		List<Producto> productos = this.modelo.buscarProductosPorPalabra(busqueda);
 		this.vista.agregarResultadosBuscadorProductos(productos);
 	}
 	
-	public void buscarTiendas() {
+	private void buscarTiendas() {
+		this.vista.limpiar(InterfazVista.ABUSCAR_TIENDAS_DESDE_ALTAPRECIO);
+		String busqueda = this.vista.getPalabraBusquedaTiendas();
+		List<Tienda> tiendas = this.modelo.buscarTiendas(busqueda);
+		this.vista.agregarResultadosBuscadorTiendas(tiendas);
+	}
+	
+	private void buscarDireccion() {
 		
 	}
 	
-	public void buscarDireccion() {
+	private void buscarMarcas() {
 		
 	}
 	
-	public void buscarMarcas() {
+	private void guardarDatosAltaPrecio() {
 		
 	}
 	
-	public void guardarDatosAltaPrecio() {
+	private void mostrarDetalleProducto() {
 		
 	}
 	
-	public void mostrarDetalleProducto() {
+	private void mostrarPreciosZona() {
 		
 	}
 	
-	public void mostrarPreciosZona() {
-		
-	}
-	
-    public void elegirProducto(int id) {
+	private void elegirProducto(int id) {
     	Usuario usr = modelo.obtenerUsuarioLogeado();
     	Producto prd = modelo.buscarProductos(new Integer[]{id}).get(0);
     	Precio prc = prd.obtenerPrecioMasReciente(usr.obtenerUbicacion());
