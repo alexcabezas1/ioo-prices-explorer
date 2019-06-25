@@ -3,9 +3,9 @@ package main;
 import javax.swing.SwingUtilities;
 
 import controlador.Controlador;
-import controlador.ControladorPrincipal;
+import controlador.ControladorAltaPrecio;
 import modelo.Modelo;
-import vista.InterfazVista;
+import vista.InterfazVistaAltaPrecio;
 import vista.TestVista;
 
 public class ExploradorPrecios {
@@ -33,20 +33,21 @@ public class ExploradorPrecios {
 		modelo.crearTienda("Coto", "French", 2417, "French", "Pueyrredon", new float[] {(float)-34.5904419,(float)-58.4012164});
 		modelo.crearTienda("Coto", "Charcas", 2980, "Charcas", "Agüero", new float[] {(float)-34.5926518, (float)-58.4077278});
 		modelo.crearTienda("Coto", "Junin", 1073, "Junin", "Av Santa Fe", new float[] {(float)-34.5958786, (float)-58.4010799});
+		
+		modelo.logearUsuario("abelardoram", "1234*");
 	}
 	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		    	
-				modelo = new Modelo();		
-				InterfazVista vista = new TestVista();
-				Controlador controlPrincipal = new ControladorPrincipal(modelo, vista);
-				vista.setControlador(controlPrincipal);
-				
+				modelo = new Modelo();
 				cargarDatosPrueba();
 				
-				vista.agregarTipos(modelo.obtenerTipos());
+				InterfazVistaAltaPrecio vista = new TestVista();
+				Controlador controlPrincipal = new ControladorAltaPrecio(modelo, vista);
+				vista.setControlador(controlPrincipal);
+				
 				vista.arranca();
 		    }
 		});

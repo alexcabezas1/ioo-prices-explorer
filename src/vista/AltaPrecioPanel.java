@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collection;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -98,6 +99,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblTipoProducto);
 		
 		cbTipoProducto = new JComboBox<String>();
+		cbTipoProducto.setEditable(true);
 		cbTipoProducto.setBounds(81, 50, 199, 19);
 		tiposComboModel = new DefaultComboBoxModel<String>();
 		cbTipoProducto.setModel(tiposComboModel);
@@ -117,6 +119,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblMarca);
 		
 		cbMarcaProducto = new JComboBox<Marca>();
+		cbMarcaProducto.setEditable(true);
 		cbMarcaProducto.setBounds(81, 75, 199, 21);
 		marcasComboModel = new DefaultComboBoxModel<Marca>();
 		cbMarcaProducto.setModel(marcasComboModel);
@@ -137,11 +140,12 @@ public class AltaPrecioPanel extends JPanel {
 		
 		btnBuscarTienda = new JButton("...");
 		btnBuscarTienda.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mostrarBuscadorTiendas();
 			}
 		});
-		btnBuscarTienda.setBounds(237, 112, 43, 21);
+		btnBuscarTienda.setBounds(236, 110, 43, 21);
 		add(btnBuscarTienda);
 		
 		JLabel lblNombreTienda = new JLabel("Nombre");
@@ -151,6 +155,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblNombreTienda);
 		
 		cbTienda = new JComboBox<String>();
+		cbTienda.setEditable(true);
 		tiendasComboModel = new DefaultComboBoxModel<String>();
 		cbTienda.setModel(tiendasComboModel);
 		cbTienda.setBounds(81, 133, 199, 21);
@@ -169,6 +174,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(cbProvincia);
 		
 		cbCalle = new JComboBox<String>();
+		cbCalle.setEditable(true);
 		callesComboModel = new DefaultComboBoxModel<String>();
 		cbCalle.setModel(callesComboModel);
 		cbCalle.setBounds(81, 187, 199, 21);
@@ -219,6 +225,7 @@ public class AltaPrecioPanel extends JPanel {
 		add(lblPrecioProducto);
 		
 		btnRegistrarPrecio = new JButton("Registrar Precio");
+		btnRegistrarPrecio.setActionCommand(InterfazVistaAltaPrecio.AGUARDAR_DATOS_ALTAPRECIO);
 		btnRegistrarPrecio.setBounds(10, 282, 270, 40);
 		btnRegistrarPrecio.setBackground(Color.BLUE);
 		btnRegistrarPrecio.setForeground(Color.WHITE);
@@ -283,8 +290,8 @@ public class AltaPrecioPanel extends JPanel {
 		callesComboModel.addAll(items);
 	}
 	
-	public JButton getBtnRegistrarPrecio() {
-		return btnRegistrarPrecio;
+	public void addListenerRegistrarPrecio(Controlador c) {
+		btnRegistrarPrecio.addActionListener(c);
 	}
 	
 	public void setControlador(Controlador c) {
@@ -293,10 +300,10 @@ public class AltaPrecioPanel extends JPanel {
 	
 	public void limpiar(String evento) {
 		switch (evento) {
-			case InterfazVista.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO: 
+			case InterfazVistaAltaPrecio.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO: 
 				buscadorProductos.limpiar();
 				break;
-			case InterfazVista.ABUSCAR_TIENDAS_DESDE_ALTAPRECIO:
+			case InterfazVistaAltaPrecio.ABUSCAR_TIENDAS_DESDE_ALTAPRECIO:
 				buscadorTiendas.limpiar();
 				break;
 		}
@@ -325,5 +332,32 @@ public class AltaPrecioPanel extends JPanel {
 		tfAltura.setText(String.valueOf(direccion.obtenerAltura()));
 		tfEntreCalles1.setText(direccion.obtenerEntreCalle1());
 		tfEntreCalles2.setText(direccion.obtenerEntreCalle2());
+	}
+	
+	public HashMap<String, String> obtenerDatos() {
+		HashMap<String, String> datos = new HashMap<>();
+		
+		datos.put("producto-nombre", tfNombreProducto.getText());
+		datos.put("producto-tipo", tipoElegido);
+		if (marcaElegida != null) {
+			datos.put("producto-marca", marcaElegida.obtenerNombre());
+		} else {
+			datos.put("producto-marca", null);
+		}
+		if (tiendasComboModel.getSelectedItem() != null) {
+			datos.put("tienda-nombre", tiendasComboModel.getSelectedItem().toString());
+		} else {
+			datos.put("tienda-nombre", null);
+		}
+		if (callesComboModel.getSelectedItem() != null) {
+			datos.put("tienda-calle", callesComboModel.getSelectedItem().toString());
+		} else {
+			datos.put("tienda-calle", null);
+		}
+		datos.put("tienda-altura", tfAltura.getText());
+		datos.put("tienda-entre-calles1", tfEntreCalles1.getText());
+		datos.put("tienda-entre-calles2", tfEntreCalles2.getText());
+		datos.put("precio", tfPrecioProducto.getText());
+		return datos;
 	}
 }

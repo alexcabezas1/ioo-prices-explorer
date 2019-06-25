@@ -30,7 +30,11 @@ public class Modelo {
     private Map<String, Producto> productosPorCodigoBarra = new HashMap<String, Producto>();
     protected Set<String> tiendasNombres = new HashSet<String>();
     protected Set<String> calles = new HashSet<String>();
-
+    
+    public List<Precio> obtenerPrecios() {
+    	return this.precios;
+    }
+    
     public Set<String> obtenerTipos(){
     	return this.tipos;
     }
@@ -94,10 +98,10 @@ public class Modelo {
 		this.precios.add(prc);
     }
 
-    public void asignarUsuarioLogeado(String nombreUsuario, String clave) {
+    public void logearUsuario(String nombreUsuario, String clave) {
     	//inicio de sesion fijo para probar
     	Persona per = new Persona("Abelardo", "Ramirez", "123456789", "01-02-1994", "m");
-    	Usuario usr = new Usuario("abelardoram", "abelardo890@gmail.com", "1234*", per);
+    	Usuario usr = new Usuario(nombreUsuario, "abelardo890@gmail.com", clave, per);
     	float[] ubic = {(float)-34.6078662, (float)-58.3831004};
     	usr.asignarUbicacion(ubic);
         this.usuarioLogeado = usr;

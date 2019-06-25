@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -12,7 +13,7 @@ import dominio.Marca;
 import dominio.Producto;
 import dominio.Tienda;
 
-public class TestVista extends JFrame implements InterfazVista {
+public class TestVista extends JFrame implements InterfazVistaAltaPrecio {
 
 	/**
 	 * 
@@ -114,12 +115,18 @@ public class TestVista extends JFrame implements InterfazVista {
 
 	@Override
 	public void preparar() {
-		notificarControlador(InterfazVista.ALLENAR_DATOS_DESDE_ALTAPRECIO);
+		notificarControlador(InterfazVistaAltaPrecio.ALLENAR_DATOS_DESDE_ALTAPRECIO);
+		altaPrecioPanel.addListenerRegistrarPrecio(this.controlador);
 	}
 
 	@Override
 	public void notificarControlador(String evento) {
 		Random gen = new Random();
 		controlador.actionPerformed(new ActionEvent(this, (Integer) gen.nextInt(), evento));
+	}
+
+	@Override
+	public HashMap<String, String> obtenerDatos() {
+		return altaPrecioPanel.obtenerDatos();
 	}
 }

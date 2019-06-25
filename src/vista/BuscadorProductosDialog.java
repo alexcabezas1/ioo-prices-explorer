@@ -56,7 +56,7 @@ public class BuscadorProductosDialog extends JDialog implements ListSelectionLis
 		tfNombre.setColumns(10);
 		
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setActionCommand(InterfazVista.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO);
+		btnBuscar.setActionCommand(InterfazVistaAltaPrecio.ABUSCAR_PRODUCTOS_DESDE_ALTAPRECIO);
 		btnBuscar.setBounds(203, 6, 85, 21);
 		contentPanel.add(btnBuscar);
 		
