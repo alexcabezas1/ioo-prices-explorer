@@ -25,7 +25,7 @@ public class TestModelo {
     }
 	
 	public static void main(String[] args) {
-    	modelo.asignarUsuarioLogeado("abelardoram", "1234*");
+    	modelo.logearUsuario("abelardoram", "1234*");
     	//Usuario usr = modelo.obtenerUsuarioLogeado();
     	
     	modelo.guardarDatosAltaPrecio("codbar1", "Arroz Integral", "Gallo", 

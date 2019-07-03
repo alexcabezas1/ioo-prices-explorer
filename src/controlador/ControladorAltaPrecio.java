@@ -10,6 +10,7 @@ import dominio.Producto;
 import dominio.Tienda;
 import dominio.Usuario;
 import modelo.Modelo;
+import vista.InterfazVista;
 import vista.InterfazVistaAltaPrecio;
 
 public class ControladorAltaPrecio extends Controlador {
@@ -36,7 +37,23 @@ public class ControladorAltaPrecio extends Controlador {
 			case InterfazVistaAltaPrecio.AGUARDAR_DATOS_ALTAPRECIO:
 				guardarDatosAltaPrecio();
 				break;
+			case InterfazVista.ALTA_PRECIO:
+				mostrarAltaPrecio();
+				break;
+			case InterfazVista.LISTA_PRECIOS:
+				mostrarListaPrecios();
+				break;
 		}
+	}
+	
+	private void mostrarAltaPrecio() {
+		this.vista.esconderListaPrecios();
+		this.vista.iniciarPanelAltaPrecio();
+	}
+	
+	private void mostrarListaPrecios() {
+		this.vista.esconderAltaPrecio();
+		this.vista.iniciarListaPrecios();
 	}
 	
 	private void prepararAltaPrecio() {

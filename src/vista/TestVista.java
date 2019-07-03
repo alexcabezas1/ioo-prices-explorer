@@ -2,12 +2,15 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import controlador.Controlador;
 import dominio.Marca;
 import dominio.Producto;
@@ -22,6 +25,8 @@ public class TestVista extends JFrame implements InterfazVistaAltaPrecio {
 	 */
 	private static final long serialVersionUID = 1L;
 	private AltaPrecioPanel altaPrecioPanel;
+	private ListaPreciosPanel listaPrecioPanel;
+	private Menu menu;
 	private Controlador controlador;
 
 	/**
@@ -45,23 +50,63 @@ public class TestVista extends JFrame implements InterfazVistaAltaPrecio {
 	 */
 	public TestVista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 304, 431);
-		setPreferredSize(new Dimension(300, 370));
-		//contentPane = new JPanel();
+		setBounds(100, 100, 1050, 650);
+		setPreferredSize(new Dimension(1050, 500));
+
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBounds(100, 100, 1050, 650);
+		setContentPane(panel);
 		
-		//contentPane.setLayout(new BorderLayout(0, 0));
-		
+		menu = new Menu();
+		menu.setLayout(null);
+		menu.setBounds(10, 10, 400, 500);
+		panel.add(menu);
+				
 		altaPrecioPanel = new AltaPrecioPanel();
+		altaPrecioPanel.setLayout(null);
+		altaPrecioPanel.setBounds(550, 80, 400, 550);
+		panel.add(altaPrecioPanel);
+
+		listaPrecioPanel = new ListaPreciosPanel();
+		listaPrecioPanel.setLayout(null);
+		listaPrecioPanel.setBounds(550, 80, 400, 550);
+		panel.add(listaPrecioPanel);
 		
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(altaPrecioPanel);
+		//setContentPane(altaPrecioPanel);
+	}
+
+	@Override
+	public void esconderAltaPrecio() {
+		System.out.print("escondiendo alta precio\n");
+		altaPrecioPanel.setVisible(false);
+	}
+
+	@Override
+	public void esconderListaPrecios() {
+		System.out.print("escondiendo lista precios\n");
+		listaPrecioPanel.setVisible(false);
+		
+	}
+
+	@Override
+	public void iniciarPanelAltaPrecio() {
+		System.out.print("iniciando alta precio\n");
+		altaPrecioPanel.setVisible(true);
+	}
+
+	@Override
+	public void iniciarListaPrecios() {
+		System.out.print("iniciando listar precios\n");
+		listaPrecioPanel.setVisible(true);
 	}
 
 	@Override
 	public void arranca() {
 		preparar();
 		pack();
-		setVisible(true);
+		this.setVisible(true);
 	}
 
 	@Override
@@ -119,6 +164,10 @@ public class TestVista extends JFrame implements InterfazVistaAltaPrecio {
 	public void preparar() {
 		notificarControlador(InterfazVistaAltaPrecio.ALLENAR_DATOS_DESDE_ALTAPRECIO);
 		altaPrecioPanel.addListenerRegistrarPrecio(this.controlador);
+//		notificarControlador(InterfazVistaAltaPrecio.ALTA_PRECIO);
+//		menu.iniciarPanelAltaPrecio(this.controlador);
+//		notificarControlador(InterfazVistaAltaPrecio.LISTA_PRECIOS);
+//		menu.iniciarPanelListaPrecio(this.controlador);
 	}
 
 	@Override

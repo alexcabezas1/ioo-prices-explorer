@@ -17,4 +17,5 @@ public interface InterfazVistaAltaPrecio extends InterfazVista {
 	void agregarMarcas(Collection<Marca> items);
 	void agregarTiendas(Collection<String> items);
 	void agregarCalles(Collection<String> items);
+	
 }

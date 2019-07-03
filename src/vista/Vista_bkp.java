@@ -19,7 +19,7 @@ import dominio.Sistema;
 import dominio.Tienda;
 import dominio.Usuario;
 
-public class Vista extends JFrame{
+public class Vista_bkp extends JFrame{
 
 	private JTextField txtCodigoProducto;
 	private JLabel lblCodigoProducto;
@@ -68,7 +68,7 @@ public class Vista extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				//usr.asignarFechaHoraActualizacion(new Timestamp(System.currentTimeMillis()));
 				//usr.asignarNombreUsuario(txtNombre.getText());
-				MenuVentana("Menú");
+				MenuVentana("Menu");
 			}
 		});
 		
@@ -94,14 +94,14 @@ public class Vista extends JFrame{
 		this.setSize(300,300);
 		this.setVisible(true);
 		
-		btnBuscarCodigo=new JButton ("Consultar Producto Por Código de Barras");
+		btnBuscarCodigo=new JButton ("Consultar Producto Por Codigo de Barras");
 		btnBuscarNombre=new JButton ("Consultar Producto Por Nombre");
 		btnAltaPrecio=new JButton ("Agregar un Precio");
 		
 		btnBuscarCodigo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ObtenerProductoPorCodigoVentana("Buscar Producto por Código de Barras");
+				ObtenerProductoPorCodigoVentana("Buscar Producto por Codigo de Barras");
 			}
 		});
 		
@@ -148,7 +148,7 @@ public class Vista extends JFrame{
 		this.setSize(300,300);
 		this.setVisible(true);
 		
-		lblCodigoProducto=new JLabel("Código:");
+		lblCodigoProducto=new JLabel("Codigo:");
 		txtCodigoProducto=new JTextField(10);
 		
 		lblNombre=new JLabel("Nombre");
@@ -178,7 +178,7 @@ public class Vista extends JFrame{
 //				Tienda tda = new Tienda();
 //				float valor = 0;
 //				sistema.altaPrecio(usr, prd, tda, valor);
-//				MenuVentana("Menú");
+//				MenuVentana("Menu");
 			}
 		});
 		
@@ -186,7 +186,7 @@ public class Vista extends JFrame{
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuVentana("Menú");
+				MenuVentana("Menu");
 			}
 		});
 		
@@ -228,7 +228,7 @@ public class Vista extends JFrame{
 		this.setSize(300,300);
 		this.setVisible(true);
 		
-		lblCodigoProducto=new JLabel("Código:");
+		lblCodigoProducto=new JLabel("Codigo:");
 		txtCodigoProducto=new JTextField(10);
 		
 		lblNombre=new JLabel("Nombre");
@@ -265,7 +265,7 @@ public class Vista extends JFrame{
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuVentana("Menú");
+				MenuVentana("Menu");
 			}
 		});
 		
@@ -320,7 +320,7 @@ public class Vista extends JFrame{
 		txtNombre=new JTextField(10);
 		
 		
-		lblCodigoProducto=new JLabel("Código:");
+		lblCodigoProducto=new JLabel("Codigo:");
 		txtCodigoProducto=new JTextField(10);
 		txtCodigoProducto.setEnabled(false);
 		
@@ -352,7 +352,7 @@ public class Vista extends JFrame{
 		btnCancelar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuVentana("Menú");
+				MenuVentana("Menu");
 			}
 		});
 		

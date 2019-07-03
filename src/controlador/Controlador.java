@@ -17,6 +17,6 @@ public class Controlador implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 	}
+	
 }

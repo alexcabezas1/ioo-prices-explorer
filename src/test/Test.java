@@ -1,10 +1,10 @@
 package test;
 
-import vista.Vista;
+import vista.Vista_bkp;
 
 public class Test {
 	public static void main(String[] args) {
-		Vista vista = new Vista();
+		Vista_bkp vista = new Vista_bkp();
 		vista.Login("Login");
 		
 	}
