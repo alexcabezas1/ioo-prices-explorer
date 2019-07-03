@@ -12,6 +12,8 @@ import controlador.Controlador;
 import dominio.Marca;
 import dominio.Producto;
 import dominio.Tienda;
+import javax.swing.JLabel;
+import java.awt.Color;
 
 public class TestVista extends JFrame implements InterfazVistaAltaPrecio {
 
@@ -43,7 +45,7 @@ public class TestVista extends JFrame implements InterfazVistaAltaPrecio {
 	 */
 	public TestVista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 244, 374);
+		setBounds(100, 100, 304, 431);
 		setPreferredSize(new Dimension(300, 370));
 		//contentPane = new JPanel();
 		

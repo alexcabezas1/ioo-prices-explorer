@@ -19,9 +19,9 @@ public class Usuario {
 
     private float[] ubicacion;
 
-    private Precio preciosRegistrados;
+    private Precio[] preciosRegistrados;
 
-    private Producto productosComprados;
+    private Producto[] productosComprados;
 
     public Usuario(String nbre, String email, String clave, Persona per) {
     	this.nombreUsuario = nbre;
@@ -72,19 +72,19 @@ public class Usuario {
 		this.ubicacion = ubicacion;
 	}
 
-	public Precio obtenerPreciosRegistrados() {
+	public Precio[] obtenerPreciosRegistrados() {
 		return preciosRegistrados;
 	}
 
-	public void asignarPreciosRegistrados(Precio preciosRegistrados) {
+	public void asignarPreciosRegistrados(Precio[] preciosRegistrados) {
 		this.preciosRegistrados = preciosRegistrados;
 	}
 
-	public Producto obtenerProductosComprados() {
+	public Producto[] obtenerProductosComprados() {
 		return productosComprados;
 	}
 
-	public void asignarProductosComprados(Producto productosComprados) {
+	public void asignarProductosComprados(Producto[] productosComprados) {
 		this.productosComprados = productosComprados;
 	}
 

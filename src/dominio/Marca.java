@@ -45,8 +45,13 @@ public class Marca {
     
     @Override
     public boolean equals(Object otraMrc) {
-    	Marca otra = (Marca) otraMrc;
-    	if (otra == null) return false;
-    	return otra.obtenerNombre().equals(this.obtenerNombre()); 
+    	try {
+	    	Marca otra = (Marca) otraMrc;
+	    	if (otra == null) return false;
+	    	return otra.obtenerNombre().equals(this.obtenerNombre()); 
+    	} catch(Exception e) {
+    		String otra = (String) otraMrc;
+    		return otra.toLowerCase().equalsIgnoreCase(this.obtenerNombre());
+    	}
     }
 }

@@ -107,7 +107,9 @@ public class AltaPrecioPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<String> cb = (JComboBox) e.getSource();
+				try {
 				setTipoElegido(cb.getSelectedItem().toString());
+				} catch(Exception except) {}
 			}
 		});
 		add(cbTipoProducto);
@@ -127,7 +129,9 @@ public class AltaPrecioPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<Marca> cb = (JComboBox) e.getSource();
-				setMarcaElegida((Marca) cb.getSelectedItem());
+				try {
+					setMarcaElegida((Marca) cb.getSelectedItem());
+				} catch (Exception except) {}
 			}
 		});
 		add(cbMarcaProducto);
@@ -275,18 +279,22 @@ public class AltaPrecioPanel extends JPanel {
 	}
 	
 	public void agregarItemsSelectorTipos(Collection<String> items) {
+		tiposComboModel.removeAllElements();
 		tiposComboModel.addAll(items);
 	}
 	
 	public void agregarItemsSelectorMarcas(Collection<Marca> items) {
+		marcasComboModel.removeAllElements();
 		marcasComboModel.addAll(items);
 	}
 	
 	public void agregarItemsSelectorTiendas(Collection<String> items) {
+		tiendasComboModel.removeAllElements();
 		tiendasComboModel.addAll(items);
 	}
 	
 	public void agregarItemsSelectorCalles(Collection<String> items) {
+		callesComboModel.removeAllElements();
 		callesComboModel.addAll(items);
 	}
 	
@@ -306,7 +314,27 @@ public class AltaPrecioPanel extends JPanel {
 			case InterfazVistaAltaPrecio.ABUSCAR_TIENDAS_DESDE_ALTAPRECIO:
 				buscadorTiendas.limpiar();
 				break;
+			case InterfazVistaAltaPrecio.AGUARDAR_DATOS_ALTAPRECIO:
+				limpiarVentana();
+				break;
 		}
+	}
+	
+	private void limpiarVentana() {
+		tfNombreProducto.setText("");
+		cbTipoProducto.setSelectedIndex(0);
+		cbMarcaProducto.setSelectedIndex(0);
+		cbTienda.setSelectedIndex(0);
+		cbCalle.setSelectedIndex(0);
+		tfAltura.setText("");
+		tfEntreCalles1.setText("");
+		tfEntreCalles2.setText("");
+		tfPrecioProducto.setText("");
+		productoElegido = null;
+		tipoElegido = null;
+		marcaElegida = null;
+		tiendaElegida = null;
+		
 	}
 	
 	public void setProductoElegido(Producto producto) {
@@ -331,7 +359,7 @@ public class AltaPrecioPanel extends JPanel {
 		callesComboModel.setSelectedItem(direccion.obtenerCalle());
 		tfAltura.setText(String.valueOf(direccion.obtenerAltura()));
 		tfEntreCalles1.setText(direccion.obtenerEntreCalle1());
-		tfEntreCalles2.setText(direccion.obtenerEntreCalle2());
+		tfEntreCalles2.setText(direccion.obtenerEntreCalle2());		
 	}
 	
 	public HashMap<String, String> obtenerDatos() {
@@ -339,15 +367,20 @@ public class AltaPrecioPanel extends JPanel {
 		
 		datos.put("producto-nombre", tfNombreProducto.getText());
 		datos.put("producto-tipo", tipoElegido);
+		if (cbTipoProducto.getSelectedItem() instanceof String) {
+			datos.put("producto-tipo", cbTipoProducto.getSelectedItem().toString());
+		}
 		if (marcaElegida != null) {
 			datos.put("producto-marca", marcaElegida.obtenerNombre());
-		} else {
-			datos.put("producto-marca", null);
+		} 
+		if (cbMarcaProducto.getSelectedItem() instanceof String ) {
+			datos.put("producto-marca", cbMarcaProducto.getSelectedItem().toString());
 		}
 		if (tiendasComboModel.getSelectedItem() != null) {
 			datos.put("tienda-nombre", tiendasComboModel.getSelectedItem().toString());
-		} else {
-			datos.put("tienda-nombre", null);
+		} 
+		if (cbTienda.getSelectedItem() instanceof String){
+			datos.put("tienda-nombre", cbTienda.getSelectedItem().toString());
 		}
 		if (callesComboModel.getSelectedItem() != null) {
 			datos.put("tienda-calle", callesComboModel.getSelectedItem().toString());

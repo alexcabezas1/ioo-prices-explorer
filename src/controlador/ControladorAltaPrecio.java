@@ -108,6 +108,8 @@ public class ControladorAltaPrecio extends Controlador {
 				datos.get("tienda-entre-calles2")
 			);
 		}
+		this.vista.limpiar(InterfazVistaAltaPrecio.AGUARDAR_DATOS_ALTAPRECIO);
+		this.vista.notificarControlador(InterfazVistaAltaPrecio.ALLENAR_DATOS_DESDE_ALTAPRECIO);
 		System.out.println(modelo.obtenerPrecios());
 	}
 	
